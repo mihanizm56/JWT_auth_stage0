@@ -1,0 +1,16 @@
+{
+  "name": "test-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "auth":"cd auth && npm start",
+    "rest": "cd rest && npm start",
+    "start": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
