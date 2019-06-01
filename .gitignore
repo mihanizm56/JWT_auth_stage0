@@ -1,1 +1,27 @@
-node_modules
+# dependencies
+/node_modules
+/auth/node_modules
+/rest/node_modules
+/package-lock.json
+/auth/package-lock.json
+/rest/package-lock.json
+*.env
+
+
+# testing
+/coverage
+/client/coverage
+/server/coverage
+
+# production
+/client/build
+/server/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
