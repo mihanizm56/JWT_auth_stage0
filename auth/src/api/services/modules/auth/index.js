@@ -1,8 +1,8 @@
-const usersInDB = require("../../../models/users").users;
 const randomId = require("uuid");
 const crypto = require("crypto");
-
-const salt = process.env.SALT;
+const { allUsers: usersInDB } = require("../../../models/users");
+const { makeHashedPassword } = require("../passwords");
+const { compareHashedPasswords } = require("../passwords");
 
 module.exports.addUser = userData => {
 	if (userData) {
@@ -18,44 +18,28 @@ module.exports.addUser = userData => {
 			return false;
 		}
 
-		const hashedPassword = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512");
-
-		usersInDB[login] = { ...userData, id: randomId(), password: hashedPassword };
+		usersInDB[login] = { ...userData, id: randomId(), password: makeHashedPassword(password) };
 
 		return true;
 	}
 };
 
 module.exports.validateUserData = dataOfValidateUser => {
-	///TODO create func to compare passwords
 	const { login, password } = dataOfValidateUser;
-	const hashedPassword = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512");
-	const readableHashedPassword = hashedPassword.toString();
 
 	if (!usersInDB[login]) {
 		console.log("no login in DB");
 		return false;
 	}
 
-	if (usersInDB[login].password.toString() === readableHashedPassword && usersInDB[login].login === login) {
+	if (
+		compareHashedPasswords(usersInDB[login].password, makeHashedPassword(password)) &&
+		usersInDB[login].login === login
+	) {
 		console.log("password is correct");
 		return true;
 	}
 
 	console.log("data of user is not correct");
 	return false;
-};
-
-module.exports.tokenVerify = (req, res, next) => {
-	const tokenHeader = req.headers["authorization"];
-
-	if (!tokenHeader) {
-		console.log("get no token");
-		return res.status(401).send({ error: { message: "did not get any token" } });
-	} else {
-		const pureToken = tokenHeader.split(" ")[1];
-
-		req.token = pureToken;
-		next();
-	}
 };

@@ -17,7 +17,6 @@ module.exports.tokenVerify = (req, res, next) => {
 module.exports.getPublicKey = () => {
 	const urlForGetPublicKey = process.env.PATH_TO_PUBLIC_KEY;
 	console.log("urlForGetPublicKey ", urlForGetPublicKey);
-	let secretKey;
 
 	return fetch(urlForGetPublicKey)
 		.then(data => data.json())

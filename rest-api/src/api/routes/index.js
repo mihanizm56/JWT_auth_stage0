@@ -1,13 +1,12 @@
+// config
 const express = require("express");
 const routes = express.Router();
 
 // controllers
-const getAllReviewsController = require("../controllers/reviews").getAllReviewsController;
-const reviewsCreateController = require("../controllers/reviews").reviewsCreateController;
-const reviewsDeleteController = require("../controllers/reviews").reviewsDeleteController;
+const { getAllReviewsController, reviewsCreateController, reviewsDeleteController } = require("../controllers/reviews");
 
 // services
-const tokenVerify = require("../services/modules/auth").tokenVerify;
+const { tokenVerify } = require("../services/modules/auth");
 
 routes.get("/reviews", getAllReviewsController);
 routes.post("/reviews", tokenVerify, reviewsCreateController);

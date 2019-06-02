@@ -1,15 +1,15 @@
+// config
 const express = require("express");
 const routes = express.Router();
 
 // controllers
-const loginController = require("../controllers/users").loginController;
-const loginTESTController = require("../controllers/users").loginTESTController;
-const getPublicKeyController = require("../controllers/users").getPublicKeyController;
-const authController = require("../controllers/users").authController;
-const refreshController = require("../controllers/users").refreshController;
+const { loginController, loginTESTController } = require("../controllers/login");
+const { getPublicKeyController } = require("../controllers/public-key-sender");
+const { authController } = require("../controllers/auth");
+const { refreshController } = require("../controllers/refresh");
 
 // services
-const tokenVerify = require("../services/modules/auth/index.js").tokenVerify;
+const { tokenVerify } = require("../services/modules/tokens");
 
 // routes
 routes.post("/login", loginController);

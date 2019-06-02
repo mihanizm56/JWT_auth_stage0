@@ -1,13 +1,13 @@
-const reviewsData = require("../../../models/reviews");
+const { reviews: reviewsData } = require("../../../models/reviews");
 
 module.exports.getAllReviews = () => {
-	const reviewsArray = reviewsData.reviews;
+	const reviewsArray = reviewsData;
 
 	return reviewsArray;
 };
 
 module.exports.addToReviews = newReview => {
-	const reviewsArray = reviewsData.reviews;
+	const reviewsArray = reviewsData;
 
 	reviewsArray.push(newReview);
 
@@ -16,8 +16,7 @@ module.exports.addToReviews = newReview => {
 
 module.exports.deleteTheReview = review => {
 	try {
-		const reviewsArray = reviewsData.reviews;
-
+		const reviewsArray = reviewsData;
 		const newReviewsArray = reviewsArray.filter(
 			reviewFromDB =>
 				reviewFromDB.login !== review.login &&
@@ -25,7 +24,7 @@ module.exports.deleteTheReview = review => {
 				reviewFromDB.review !== review.review
 		);
 
-		reviewsData.reviews = newReviewsArray;
+		reviewsData = newReviewsArray;
 
 		return null;
 	} catch (error) {
@@ -34,8 +33,7 @@ module.exports.deleteTheReview = review => {
 };
 
 module.exports.isNewReview = review => {
-	const reviewsArray = reviewsData.reviews;
-
+	const reviewsArray = reviewsData;
 	const findDuplicateReviews = reviewsArray
 		.filter(item => item.login === review.login)
 		.filter(item => item.review === review.review)
