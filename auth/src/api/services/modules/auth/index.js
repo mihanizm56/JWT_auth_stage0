@@ -1,5 +1,8 @@
 const usersInDB = require("../../../models/users").users;
 const randomId = require("uuid");
+const crypto = require("crypto");
+
+const salt = process.env.SALT;
 
 module.exports.addUser = userData => {
 	if (userData) {
@@ -15,21 +18,26 @@ module.exports.addUser = userData => {
 			return false;
 		}
 
-		usersInDB[login] = { ...userData, id: randomId() };
+		const hashedPassword = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512");
+
+		usersInDB[login] = { ...userData, id: randomId(), password: hashedPassword };
 
 		return true;
 	}
 };
 
 module.exports.validateUserData = dataOfValidateUser => {
+	///TODO create func to compare passwords
 	const { login, password } = dataOfValidateUser;
+	const hashedPassword = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512");
+	const readableHashedPassword = hashedPassword.toString();
 
 	if (!usersInDB[login]) {
 		console.log("no login in DB");
 		return false;
 	}
 
-	if (usersInDB[login].password === password && usersInDB[login].login === login) {
+	if (usersInDB[login].password.toString() === readableHashedPassword && usersInDB[login].login === login) {
 		console.log("password is correct");
 		return true;
 	}
