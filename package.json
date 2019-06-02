@@ -4,9 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "auth":"cd auth && npm start",
-    "rest": "cd rest && npm start",
-    "start": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest\""
+    "auth": "cd auth && npm start",
+    "rest-api": "cd rest-api && npm start",
+    "start": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest-api\"",
+    "install:main": "npm i",
+    "install:auth": "cd auth && npm i",
+    "install:rest-api": "cd rest-api && npm i",
+    "install:all": "npm run install:auth && npm run install:rest-api && npm run install:main"
   },
   "author": "",
   "license": "ISC",

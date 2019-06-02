@@ -1,12 +1,12 @@
 # dependencies
 /node_modules
 /auth/node_modules
-/rest/node_modules
+/rest-api/node_modules
 /package-lock.json
 /auth/package-lock.json
-/rest/package-lock.json
+/rest-api/package-lock.json
 /auth/*.env
-/rest/*.env
+/rest-api/*.env
 
 
 # testing

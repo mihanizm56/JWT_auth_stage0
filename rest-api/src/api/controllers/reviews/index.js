@@ -4,7 +4,7 @@ const getAllReviews = require("../../services/modules/reviews").getAllReviews;
 const isNewReview = require("../../services/modules/reviews").isNewReview;
 const deleteTheReview = require("../../services/modules/reviews").deleteTheReview;
 const addToReviews = require("../../services/modules/reviews").addToReviews;
-const getSecretKey = require("../../services/modules/auth").getSecretKey;
+const getPublicKey = require("../../services/modules/auth").getPublicKey;
 const getSuccessMessage = require("../../../utils").getSuccessMessage;
 
 module.exports.getAllReviewsController = (req, res) => {
@@ -15,7 +15,7 @@ module.exports.getAllReviewsController = (req, res) => {
 };
 
 module.exports.reviewsCreateController = (req, res) => {
-	getSecretKey().then(secret => {
+	getPublicKey().then(secret => {
 		jwt.verify(req.token, secret, (error, authData) => {
 			if (error) {
 				console.log("get an error ", error.name);
@@ -55,7 +55,7 @@ module.exports.reviewsCreateController = (req, res) => {
 };
 
 module.exports.reviewsDeleteController = (req, res) => {
-	getSecretKey().then(secret => {
+	getPublicKey().then(secret => {
 		jwt.verify(req.token, secret, (error, authData) => {
 			if (error) {
 				console.log("get an error ", error);

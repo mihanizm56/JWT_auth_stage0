@@ -14,12 +14,12 @@ module.exports.tokenVerify = (req, res, next) => {
 	}
 };
 
-module.exports.getSecretKey = () => {
-	const urlForGetSecretKey = process.env.PATH_TO_KEY;
-	console.log("urlForGetSecretKey ", urlForGetSecretKey);
+module.exports.getPublicKey = () => {
+	const urlForGetPublicKey = process.env.PATH_TO_PUBLIC_KEY;
+	console.log("urlForGetPublicKey ", urlForGetPublicKey);
 	let secretKey;
 
-	return fetch(urlForGetSecretKey)
+	return fetch(urlForGetPublicKey)
 		.then(data => data.json())
 		.then(data => data.key);
 };

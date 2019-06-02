@@ -4,7 +4,7 @@ const routes = express.Router();
 // controllers
 const loginController = require("../controllers/users").loginController;
 const loginTESTController = require("../controllers/users").loginTESTController;
-const getSecretController = require("../controllers/users").getSecretController;
+const getPublicKeyController = require("../controllers/users").getPublicKeyController;
 const authController = require("../controllers/users").authController;
 const refreshController = require("../controllers/users").refreshController;
 
@@ -17,6 +17,6 @@ routes.get("/login", loginTESTController); /// TODO remove
 routes.post("/authentificate", authController);
 routes.post("/refresh", tokenVerify, refreshController);
 
-routes.get("/secret", getSecretController);
+routes.get("/public", getPublicKeyController);
 
 module.exports = routes;
