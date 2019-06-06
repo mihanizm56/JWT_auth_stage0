@@ -1,19 +1,36 @@
-const { validateUserData } = require("../../services/modules/auth");
+const { userCollection } = require("../../services/modules/auth");
+const { compareHashedPasswords, makeHashedPassword } = require("../../services/modules/passwords");
 const { createTokenPair } = require("../../services/modules/tokens");
 
 module.exports.authController = (req, res) => {
 	const userData = req.body;
+	const { user, password, login } = userData;
 	console.log("userData //////", userData);
-	const isUserDataValid = validateUserData(userData);
 
-	if (!isUserDataValid) {
-		console.log("userData is not valid ");
-		return res.status(403).send({ error: { message: "user data is not valid" } });
+	if (!login || !password || !user) {
+		console.log("not full user data");
+		return res.status(403).send({ error: { message: "enter the correct user data" } });
 	}
 
-	const { access_token, refresh_token } = createTokenPair(userData.login);
+	userCollection(login).exec((error, data) => {
+		if (error) {
+			console.log("check err", error);
+			return res.status(500).json({ error: "internal db error" });
+		}
 
-	console.log("user is valid, tokens were sent ", userData);
+		if (data) {
+			const verifyPassword = compareHashedPasswords(makeHashedPassword(password), data.password);
 
-	return res.status(200).send({ access_token, refresh_token });
+			if (verifyPassword) {
+				const { access_token, refresh_token } = createTokenPair(userData.login);
+				console.log("user is valid, tokens were sent ", userData);
+
+				return res.status(200).send({ access_token, refresh_token });
+			}
+
+			return res.status(401).send({ error: { message: "unauthorized" } });
+		}
+
+		return res.status(401).send({ error: { message: "unauthorized" } });
+	});
 };

@@ -28,9 +28,9 @@ module.exports.refreshController = (req, res) => {
 
 						return res.status(500).send({ error: { message: "internal db error", error } });
 					}
-				});
 
-				return res.status(200).send({ access_token, refresh_token });
+					return res.status(200).send({ access_token, refresh_token });
+				});
 			}
 
 			console.log("refresh token was used");

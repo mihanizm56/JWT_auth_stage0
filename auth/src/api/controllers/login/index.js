@@ -1,32 +1,33 @@
-const { addUser } = require("../../services/modules/auth");
+const { addUserInDb } = require("../../services/modules/auth");
 const { createTokenPair } = require("../../services/modules/tokens");
 const { getRefreshPath } = require("../../services/modules/paths");
-const { allUsers } = require("../../models/users"); /////TODO to test created users
 
-module.exports.loginController = (req, res) => {
+module.exports.loginUserController = (req, res) => {
 	const newUser = req.body;
-	const userAdded = addUser(newUser);
+	const { user, password, login } = newUser;
+	console.log("check data of user", newUser);
 
-	if (!userAdded) {
-		console.log("user was not added ");
-		return res.status(403).send({ error: { message: "user was not added" } });
+	if (!login || !password || !user) {
+		console.log("not full user data");
+		return res.status(403).send({ error: { message: "enter the correct user data" } });
 	}
 
-	if (!newUser.login) {
-		console.log("user was not added ");
-		return res.status(403).send({ error: { message: "user has not sent a login" } });
-	}
+	addUserInDb(newUser).save((error, data) => {
+		if (error) {
+			console.log("USER SAVE ERROR", error);
 
-	const { access_token, refresh_token } = createTokenPair(newUser.login);
-	const refreshPath = getRefreshPath();
+			if (error.code === 11000) {
+				return res.status(403).send({ error: { message: "user was not added" } });
+			}
 
-	console.log("user added ", newUser);
+			return res.status(500).send({ error: { message: "internal db error", error } });
+		}
 
-	return res.status(200).send({ access_token, refresh_token, refreshPath });
-};
+		const { access_token, refresh_token } = createTokenPair(login);
+		const refreshPath = getRefreshPath();
 
-////TODO to test created users
-module.exports.loginTESTController = (req, res) => {
-	console.log("loginTESTController send data");
-	res.status(200).send(allUsers);
+		console.log("user added ", newUser);
+
+		return res.status(200).send({ access_token, refresh_token, refreshPath });
+	});
 };

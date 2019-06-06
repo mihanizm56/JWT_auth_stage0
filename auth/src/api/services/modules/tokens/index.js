@@ -6,14 +6,10 @@ const jwt_secret_key = process.env.JWT_SECRET;
 const jwt_public_key = process.env.JWT_PUBLIC;
 const timeAccessTokenToExpireSeconds = process.env.TIME_TO_EXPIRE;
 
-////////////////////////
-
 module.exports.checkUsedRefreshTokens = refresh_token => {
 	const ExpiredToken = mongoose.model("ExpiredToken");
 	return ExpiredToken.findOne({ token: refresh_token });
 };
-
-/////////////////////
 
 module.exports.saveExpiredToken = token => {
 	const ExpiredToken = mongoose.model("ExpiredToken");
@@ -46,6 +42,6 @@ module.exports.createTokenPair = userLogin => {
 };
 
 module.exports.getPublicKey = () => {
-	console.log("public tokens wes sent");
+	console.log("public tokens was sent");
 	return jwt_public_key;
 };
