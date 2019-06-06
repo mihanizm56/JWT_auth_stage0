@@ -1,20 +1,23 @@
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 const { usedRefreshTokens } = require("../../../models/tokens");
 
 const jwt_secret_key = process.env.JWT_SECRET;
 const jwt_public_key = process.env.JWT_PUBLIC;
 const timeAccessTokenToExpireSeconds = process.env.TIME_TO_EXPIRE;
 
-module.exports.checkUsedRefreshTokens = token => {
-	const filteredExpiredTokens = usedRefreshTokens.tokens.filter(expiredToken => expiredToken === token);
-	console.log("filteredExpiredTokens", filteredExpiredTokens.length);
+////////////////////////
 
-	return !Boolean(filteredExpiredTokens.length);
+module.exports.checkUsedRefreshTokens = refresh_token => {
+	const ExpiredToken = mongoose.model("ExpiredToken");
+	return ExpiredToken.findOne({ token: refresh_token });
 };
 
+/////////////////////
+
 module.exports.saveExpiredToken = token => {
-	console.log("savedExpiredToken", token);
-	usedRefreshTokens.tokens.push(token);
+	const ExpiredToken = mongoose.model("ExpiredToken");
+	return (addedToken = new ExpiredToken({ token }));
 };
 
 module.exports.tokenVerify = (req, res, next) => {
