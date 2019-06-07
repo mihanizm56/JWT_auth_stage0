@@ -15,7 +15,6 @@ const { tokenVerify } = require("../services/modules/tokens");
 routes.post("/login", loginUserController);
 routes.post("/authentificate", authController);
 routes.post("/refresh", tokenVerify, refreshController);
-
 routes.get("/public", getPublicKeyController);
 
 module.exports = routes;

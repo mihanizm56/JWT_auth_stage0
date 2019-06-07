@@ -8,6 +8,7 @@ const { getAllReviewsController, reviewsCreateController, reviewsDeleteControlle
 // services
 const { tokenVerify } = require("../services/modules/auth");
 
+// routes
 routes.get("/reviews", getAllReviewsController);
 routes.post("/reviews", tokenVerify, reviewsCreateController);
 routes.delete("/reviews", tokenVerify, reviewsDeleteController);

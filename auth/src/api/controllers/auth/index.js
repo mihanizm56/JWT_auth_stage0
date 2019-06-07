@@ -5,7 +5,6 @@ const { createTokenPair } = require("../../services/modules/tokens");
 module.exports.authController = (req, res) => {
 	const userData = req.body;
 	const { user, password, login } = userData;
-	console.log("userData //////", userData);
 
 	if (!login || !password || !user) {
 		console.log("not full user data");
@@ -19,7 +18,8 @@ module.exports.authController = (req, res) => {
 		}
 
 		if (data) {
-			const verifyPassword = compareHashedPasswords(makeHashedPassword(password), data.password);
+			const hashedRequestPassword = makeHashedPassword(password);
+			const verifyPassword = compareHashedPasswords(hashedRequestPassword, data.password);
 
 			if (verifyPassword) {
 				const { access_token, refresh_token } = createTokenPair(userData.login);
@@ -28,9 +28,10 @@ module.exports.authController = (req, res) => {
 				return res.status(200).send({ access_token, refresh_token });
 			}
 
+			console.log("user is not authorized");
 			return res.status(401).send({ error: { message: "unauthorized" } });
 		}
 
-		return res.status(401).send({ error: { message: "unauthorized" } });
+		return res.status(401).send({ error: { message: "there is no user in db" } });
 	});
 };

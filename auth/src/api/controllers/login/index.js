@@ -2,6 +2,7 @@ const { addUserInDb } = require("../../services/modules/auth");
 const { createTokenPair } = require("../../services/modules/tokens");
 const { getRefreshPath } = require("../../services/modules/paths");
 
+/// add the new user to db
 module.exports.loginUserController = (req, res) => {
 	const newUser = req.body;
 	const { user, password, login } = newUser;
@@ -17,7 +18,7 @@ module.exports.loginUserController = (req, res) => {
 			console.log("USER SAVE ERROR", error);
 
 			if (error.code === 11000) {
-				return res.status(403).send({ error: { message: "user was not added" } });
+				return res.status(403).send({ error: { message: "user is not new" } });
 			}
 
 			return res.status(500).send({ error: { message: "internal db error", error } });

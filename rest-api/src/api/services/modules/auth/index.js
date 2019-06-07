@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
 
+// token verification
 module.exports.tokenVerify = (req, res, next) => {
 	const tokenHeader = req.headers["authorization"];
 
@@ -14,11 +15,13 @@ module.exports.tokenVerify = (req, res, next) => {
 	}
 };
 
+// fetch to get the public key of rsa256
 module.exports.getPublicKey = () => {
 	const urlForGetPublicKey = process.env.PATH_TO_PUBLIC_KEY;
 	console.log("urlForGetPublicKey ", urlForGetPublicKey);
 
 	return fetch(urlForGetPublicKey)
 		.then(data => data.json())
-		.then(data => data.key);
+		.then(data => data.key)
+		.catch(error => console.log("getPublicKey fetch gets an error", error) || null);
 };

@@ -20,12 +20,13 @@ module.exports.getAllReviewsController = (req, res) => {
 };
 
 module.exports.reviewsCreateController = (req, res) => {
+	const newReview = req.body;
+	const { review, login, user } = newReview;
+
 	getPublicKey()
 		.then(secret => {
 			console.log("get secret", secret);
 			jwt.verify(req.token, secret, { algorithms: ["RS256"] }, (error, authData) => {
-				console.log("get data from token ", authData);
-				console.log("get data from request ", req.body);
 				if (error) {
 					console.log("get an error ", error);
 
@@ -40,9 +41,6 @@ module.exports.reviewsCreateController = (req, res) => {
 					console.log("reviewsCreateController gets no authData ", newReview);
 					return res.status(400).send({ error: { message: "bad request" } });
 				}
-
-				const newReview = req.body;
-				const { review, login, user } = newReview;
 
 				if (!review || !login || !user) {
 					console.log("not valid request");
@@ -80,11 +78,12 @@ module.exports.reviewsCreateController = (req, res) => {
 };
 
 module.exports.reviewsDeleteController = (req, res) => {
+	const reviewToDelete = req.body;
+	const { review, login, user } = reviewToDelete;
+
 	getPublicKey()
 		.then(secret => {
 			jwt.verify(req.token, secret, (error, authData) => {
-				console.log("get data from token ", authData);
-				console.log("get data from request ", req.body);
 				if (error) {
 					console.log("get an error ", error);
 
@@ -100,10 +99,6 @@ module.exports.reviewsDeleteController = (req, res) => {
 					return res.status(400).send({ error: { message: "bad request" } });
 				}
 
-				const reviewToDelete = req.body;
-				const { review, login, user } = reviewToDelete;
-				console.log("get reviewToDelete in reviewsDeleteController ", reviewToDelete);
-
 				if (!review || !login || !user) {
 					console.log("not valid request");
 					return res.status(400).send({ error: { message: "bad request" } });
@@ -114,11 +109,11 @@ module.exports.reviewsDeleteController = (req, res) => {
 
 					if (error) {
 						console.log("get an error ", error);
-
 						return res.status(400).send({ error: { message: "bad request" } });
 					}
 
 					if (deletedCount) {
+						console.log("the review was deleted", reviewToDelete);
 						return res.status(200).json({ data: null, message: "the review was deleted" });
 					}
 

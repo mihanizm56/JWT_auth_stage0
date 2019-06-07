@@ -1,16 +1,3 @@
-// module.exports.allUsers = {
-// 	users: {},
-// };
-
-// users: {
-// 	"test-login": {
-// 		id: "1",
-// 		user: "test-user",
-// 		password: "test-password",
-// 		login: "test-login",
-// 	},
-// },
-
 const mongoose = require("mongoose");
 
 const usersSchema = new mongoose.Schema({
@@ -22,6 +9,7 @@ const usersSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true,
+		unique: false,
 	},
 	login: {
 		type: String,
