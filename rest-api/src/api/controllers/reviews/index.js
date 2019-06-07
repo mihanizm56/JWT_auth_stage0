@@ -1,90 +1,130 @@
 const jwt = require("jsonwebtoken");
 const { getAllReviews, isNewReview, deleteTheReview, addToReviews } = require("../../services/modules/reviews");
 const { getPublicKey } = require("../../services/modules/auth");
-const { getSuccessMessage } = require("../../../utils");
 
 module.exports.getAllReviewsController = (req, res) => {
-	const allReviews = getAllReviews();
-	console.log("reviewsController send data");
-	res.status(200);
-	res.json(allReviews);
+	getAllReviews().exec((error, data) => {
+		if (error) {
+			console.log("get an error ", error);
+			return res.status(400).send({ error: { message: "bad request" } });
+		}
+
+		if (!data) {
+			console.log("no reviews");
+			return res.status(404).send({ error: { message: "no data" } });
+		}
+
+		console.log("reviews were sent");
+		return res.status(200).json({ data });
+	});
 };
 
 module.exports.reviewsCreateController = (req, res) => {
-	getPublicKey().then(secret => {
-		// console.log("get secret", secret);
-		jwt.verify(req.token, secret, { algorithms: ["RS256"] }, (error, authData) => {
-			if (!authData) {
-				console.log("reviewsCreateController gets no authData ", newReview);
-				return res.status(400).send({ error: { message: "bad request" } });
-			}
-			console.log("get data from token ", authData);
-			const newReview = req.body;
-			const { review, login, user } = newReview;
+	getPublicKey()
+		.then(secret => {
+			console.log("get secret", secret);
+			jwt.verify(req.token, secret, { algorithms: ["RS256"] }, (error, authData) => {
+				console.log("get data from token ", authData);
+				console.log("get data from request ", req.body);
+				if (error) {
+					console.log("get an error ", error);
 
-			if (error) {
-				console.log("get an error ", error);
+					if (error.name === "TokenExpiredError") {
+						return res.status(403).send({ error: { message: "token expired" } });
+					}
 
-				if (error.name === "TokenExpiredError") {
-					return res.status(403).send({ error: { message: "token expired" } });
+					return res.status(403).send({ error: { message: "bad request", error } });
 				}
 
-				return res.status(403).send({ error: { message: "bad request", error } });
-			}
+				if (!authData) {
+					console.log("reviewsCreateController gets no authData ", newReview);
+					return res.status(400).send({ error: { message: "bad request" } });
+				}
 
-			if (!review || !login || !user) {
-				console.log("not valid request");
-				return res.status(400).send({ error: { message: "bad request" } });
-			}
+				const newReview = req.body;
+				const { review, login, user } = newReview;
 
-			const allReviews = getAllReviews();
-			const checkForNewReview = isNewReview(newReview);
+				if (!review || !login || !user) {
+					console.log("not valid request");
+					return res.status(400).send({ error: { message: "bad request" } });
+				}
 
-			if (!checkForNewReview) {
-				console.log("not a new review");
-				return res.status(400).send({ error: { message: "bad request" } });
-			}
+				addToReviews({ ...newReview }).save((error, data) => {
+					if (error) {
+						console.log("get an error ", error);
 
-			console.log("reviewsCreateController added review ", newReview);
-			return res.status(200).json(getSuccessMessage(addToReviews(newReview)));
-		});
-	});
+						if (error.code === 11000) {
+							return res.status(403).send({ error: { message: "not a unique review" } });
+						}
+
+						return res.status(400).send({ error: { message: "bad request" } });
+					}
+
+					if (!data) {
+						console.log("no reviews");
+						return res.status(404).send({ error: { message: "no data" } });
+					}
+
+					const { user, login, review } = data;
+
+					if (user && login && review) {
+						console.log("the new review was added");
+						return res.status(200).json({ user, login, review });
+					}
+
+					return res.status(400).send({ error: { message: "bad request" } });
+				});
+			});
+		})
+		.catch(error => res.status(500).send({ error: { message: "internal server error" } }));
 };
 
 module.exports.reviewsDeleteController = (req, res) => {
-	getPublicKey().then(secret => {
-		jwt.verify(req.token, secret, (error, authData) => {
-			if (error) {
-				console.log("get an error ", error);
-				return res.status(403).send({ error: { message: "there is no review like this" } });
-			}
+	getPublicKey()
+		.then(secret => {
+			jwt.verify(req.token, secret, (error, authData) => {
+				console.log("get data from token ", authData);
+				console.log("get data from request ", req.body);
+				if (error) {
+					console.log("get an error ", error);
 
-			if (!review || !login || !user) {
-				console.log("not valid request");
+					if (error.name === "TokenExpiredError") {
+						return res.status(403).send({ error: { message: "token expired" } });
+					}
 
-				return res.status(400).send({ error: { message: "bad request" } });
-			}
+					return res.status(403).send({ error: { message: "bad request", error } });
+				}
 
-			const reviewToDelete = req.body;
-			const { review, login, user } = reviewToDelete;
-			const allReviews = getAllReviews();
-			const checkForNewReview = isNewReview(reviewToDelete);
-			const detetedOperation = deleteTheReview(reviewToDelete);
-			console.log("get reviewToDelete in reviewsDeleteController ", reviewToDelete);
+				if (!authData) {
+					console.log("reviewsDeleteController gets no data intoken");
+					return res.status(400).send({ error: { message: "bad request" } });
+				}
 
-			if (checkForNewReview) {
-				console.log("not an existed review");
+				const reviewToDelete = req.body;
+				const { review, login, user } = reviewToDelete;
+				console.log("get reviewToDelete in reviewsDeleteController ", reviewToDelete);
 
-				return res.status(400).send({ error: { message: "bad request" } });
-			}
+				if (!review || !login || !user) {
+					console.log("not valid request");
+					return res.status(400).send({ error: { message: "bad request" } });
+				}
 
-			if (detetedOperation === null) {
-				console.log("reviewsDeleteController deleted review ", reviewToDelete);
+				deleteTheReview(reviewToDelete).exec((error, data) => {
+					const { deletedCount } = data;
 
-				return res.status(200).json(getSuccessMessage(reviewToDelete));
-			} else {
-				return res.status(400).send({ error: { message: "bad request" } });
-			}
-		});
-	});
+					if (error) {
+						console.log("get an error ", error);
+
+						return res.status(400).send({ error: { message: "bad request" } });
+					}
+
+					if (deletedCount) {
+						return res.status(200).json({ data: null, message: "the review was deleted" });
+					}
+
+					return res.status(400).send({ error: { message: "no review to delete" } });
+				});
+			});
+		})
+		.catch(error => res.status(500).send({ error: { message: "internal server error" } }));
 };
