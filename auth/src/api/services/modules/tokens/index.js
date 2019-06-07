@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-const { usedRefreshTokens } = require("../../../models/tokens");
+// const { usedRefreshTokens } = require("../../../models/tokens");
 
 const jwt_secret_key = process.env.JWT_SECRET;
 const jwt_public_key = process.env.JWT_PUBLIC;

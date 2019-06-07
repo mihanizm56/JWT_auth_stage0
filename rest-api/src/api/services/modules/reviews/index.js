@@ -1,9 +1,16 @@
+const mongoose = require("mongoose");
 const { reviews: reviewsData } = require("../../../models/reviews");
+// const { Review } = require("../../../models/reviews");
 
-module.exports.getAllReviews = () => {
-	const reviewsArray = reviewsData;
+// module.exports.getAllReviews = () => {
+// 	const reviewsArray = reviewsData;
 
-	return reviewsArray;
+// 	return reviewsArray;
+// };
+
+module.exports.getAllReviews = reviewData => {
+	const Review = mongoose.model("Review");
+	return (addedToken = new Review({ ...reviewData }));
 };
 
 module.exports.addToReviews = newReview => {

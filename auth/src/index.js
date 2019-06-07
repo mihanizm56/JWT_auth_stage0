@@ -28,7 +28,7 @@ const connectDB = () => {
 		useNewUrlParser: true,
 	};
 
-	mongoose.connect(process.env.MONGO_URL_REFRESH_TOKENS, options);
+	mongoose.connect(process.env.DB_URL, options);
 	mongoose.set("useCreateIndex", true);
 
 	console.log("connected to db");
