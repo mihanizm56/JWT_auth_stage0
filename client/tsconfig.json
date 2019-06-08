@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "allowJs":  true,
+    "allowJs": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "jsx": "react",
-    "module": "es6",
+    "jsx": "preserve",
+    "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "outDir": "./dist/",
@@ -14,7 +14,18 @@
     "types": [
       "jest",
       "node"
-    ]
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "include": [
     "./src/**/*"
