@@ -4,9 +4,9 @@ import { getLoginState } from "../../../redux/modules/auth";
 
 class WrappedContainer extends Component {
 	render() {
-		const { children, loginState } = this.props;
+		const { children, loginState, ...restProps } = this.props;
 
-		return React.Children.map(children, child => React.cloneElement(child, { loginState }));
+		return React.Children.map(children, child => React.cloneElement(child, { loginState, ...restProps }));
 	}
 }
 

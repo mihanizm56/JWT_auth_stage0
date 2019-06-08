@@ -28,7 +28,7 @@ const mapDispatchToProps = dispatch => {
 	};
 };
 
-export const AuthLoginStoreProvider = connect(
+export const AuthLoginProvider = connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(WrappedContainer);

@@ -6,4 +6,7 @@ export const loginFailedAction = () => ({ type: LOGIN_STATE_FAILED });
 
 export const logoutAction = () => ({ type: LOGOUT });
 
-export const loginRequestAction = (email, password) => ({ type: LOGIN_STATE_PENDING, payload: { email, password } });
+export const loginRequestAction = ({ email, password }) => ({
+	type: LOGIN_STATE_PENDING,
+	payload: { email, password },
+});

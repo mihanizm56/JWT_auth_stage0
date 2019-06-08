@@ -1,19 +1,25 @@
-import { fetchLoginAndPassword } from "../../api";
+import { fetchLoginRequest } from "../../api";
 
-export const asyncValidateForAuth = values => {
-	return fetchLoginAndPassword().then(data => {
-		const resultError = {};
+// export const asyncValidateForAuth = values => {
+// 	return fetchLoginRequest().then(responce => {
+// 		console.log("check data", data);
+// 		const resultError = {};
+// 		const { data } = responce;
 
-		if (values.email !== data.email) {
-			resultError.email = "Неверный логин";
-		}
+// 		const { access_token, refresh_token, error } = data;
 
-		if (values.password !== data.password) {
-			resultError.password = "Неправильный пароль";
-		}
+// 		if (error) {
+// 			return alert("server error");
+// 		}
 
-		if (resultError.email || resultError.password) throw resultError;
+// 		if (!data || !access_token || !refresh_token) {
+// 			resultError.email = "Неверный логин";
+// 			resultError.password = "Неправильный пароль";
+// 		}
 
-		return data;
-	});
-};
+// 		if (resultError.email || resultError.password) {
+// 			console.log("error", resultError);
+// 			throw resultError;
+// 		}
+// 	});
+// };
