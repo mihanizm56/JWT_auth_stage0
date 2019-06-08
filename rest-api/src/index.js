@@ -15,7 +15,7 @@ require("./api/services/modules/db");
 const apiRouter = require("./api/routes");
 
 // define the server port
-const port = process.env.SERVER_PORT || 10000;
+const port = process.env.SERVER_PORT || 11000;
 
 // define the middlewares
 app.use(cors({ origin: "*" }));
