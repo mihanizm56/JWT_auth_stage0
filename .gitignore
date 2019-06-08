@@ -1,8 +1,8 @@
 # dependencies
-/node_modules
-/auth/node_modules
+node_modules
+auth/node_modules
+package-lock.json
 /rest-api/node_modules
-/package-lock.json
 /auth/package-lock.json
 /rest-api/package-lock.json
 
