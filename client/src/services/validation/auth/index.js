@@ -1,4 +1,4 @@
-import { fetchLoginAndPassword } from "../..";
+import { fetchLoginAndPassword } from "../../api";
 
 export const asyncValidateForAuth = values => {
 	return fetchLoginAndPassword().then(data => {

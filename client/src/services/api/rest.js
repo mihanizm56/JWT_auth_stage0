@@ -1,6 +1,6 @@
-export const get = ({ endpoint }) => fetch(endpoint);
+export const getApi = ({ endpoint }) => fetch(endpoint);
 
-export const post = ({ endpoint, data }) => {
+export const postApi = ({ endpoint, data }) => {
 	const paramsObject = {
 		method: "post",
 		headers: {
@@ -15,7 +15,7 @@ export const post = ({ endpoint, data }) => {
 	return fetch(resultUrl, paramsObject);
 };
 
-export const delete = ({endpoint,data}) => {
+export const deleteApi = ({ endpoint, data }) => {
 	const paramsObject = {
 		method: "delete",
 		headers: {
