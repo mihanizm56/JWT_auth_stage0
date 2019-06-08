@@ -1,7 +1,6 @@
 import React from "react";
 import { Switch, Redirect } from "react-router-dom";
-import { IndexPageRoute } from "./index-page-route";
-import { ProfilePageRoute } from "./profile-page-route";
+// import { ProfilePageRoute } from "./profile-page-route";
 
 export const PrivateRoute = props => {
 	const { loggedIn } = props;
@@ -10,10 +9,8 @@ export const PrivateRoute = props => {
 		<Redirect to="/login" />
 	) : (
 		<Switch>
-			<IndexPageRoute exact path="/" {...props} />
-			<IndexPageRoute exact path="/map" {...props} />
-			<ProfilePageRoute exact path="/profile" {...props} />
-			<Redirect to="/map" />
+			{/* <ReviewsPageRoute exact path="/reviews" {...props} /> */}
+			<Redirect to="/reviews" />
 		</Switch>
 	);
 };

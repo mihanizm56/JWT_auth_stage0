@@ -3,11 +3,12 @@ import { Switch } from "react-router-dom";
 import { LoginPageRoute } from "../page-route";
 import { PrivateRoute } from "../page-route/private-routes";
 
-export const MainLayout = props => {
+export const MainLayout = () => {
 	return (
 		<Switch>
-			<LoginPageRoute exact path="/login" {...props} />
-			<PrivateRoute {...props} />
+			{/* <PublicRoute exact path="/login" /> */}
+			<LoginPageRoute exact path="/login" />
+			{/* <PrivateRoute /> */}
 		</Switch>
 	);
 };

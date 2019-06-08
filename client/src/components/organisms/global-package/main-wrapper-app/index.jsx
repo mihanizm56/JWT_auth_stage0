@@ -1,18 +1,14 @@
 import React, { memo } from "react";
 import { MainLayout } from "../../../../routes";
-import { Header } from "../../..";
-import { AuthStoreProvider, AuthFormProvider } from "../../../../containers";
+// import { AuthStoreProvider } from "../../../../containers";
 import "./MainWrapper.css";
 
-export const MainWrapper = memo(props => {
+export const MainWrapper = memo(() => {
 	return (
 		<div className="main-wrapper">
-			<Header />
-			<AuthStoreProvider>
-				<AuthFormProvider>
-					<MainLayout {...props} />
-				</AuthFormProvider>
-			</AuthStoreProvider>
+			{/* <AuthStoreProvider> */}
+			<MainLayout />
+			{/* </AuthStoreProvider> */}
 		</div>
 	);
 });
