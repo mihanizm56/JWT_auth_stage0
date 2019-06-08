@@ -5,7 +5,8 @@ import "./App.css";
 export const App = memo(() => {
 	return (
 		<div className="global-wrapper">
-			<MainWrapper />
+			{/* <MainWrapper /> */}
+			test
 		</div>
 	);
 });
