@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "client": "cd client && npm start",
     "auth": "cd auth && npm start",
     "rest-api": "cd rest-api && npm start",
-    "start": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest-api\"",
+    "start": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest-api\" \"npm run client\"",
+    "server": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest-api\"",
     "stop": "taskkill /F /IM node.exe",
     "install:main": "npm i",
     "install:auth": "cd auth && npm i",
     "install:rest-api": "cd rest-api && npm i",
-    "install:all": "npm run install:auth && npm run install:rest-api && npm run install:main"
+    "install:client": "cd client && npm i",
+    "install:all": "npm run install:auth && npm run install:rest-api && npm run install:main && npm run install:client"
   },
   "author": "",
   "license": "ISC",

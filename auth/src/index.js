@@ -26,7 +26,7 @@ app.use("/auth", authRouter);
 // func to start the server
 const startServer = () => {
 	app.listen(port);
-	console.log("app started on port", port);
+	console.log("auth app started on port", port);
 };
 
 // func to start the db connection

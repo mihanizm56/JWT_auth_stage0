@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Verdana';
+    src: url("./Verdana/Verdana.ttf");
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-family: 'Verdana-Bold';
+    src: url("./Verdana/Verdana-Bold.ttf");
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'OpenSans';
+    src: url("./OpenSans/OpenSans-Regular.ttf");
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-family: 'OpenSans-Bold';
+    src: url("./OpenSans/OpenSans-Bold.ttf");
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-family: 'OpenSans-Light';
+    src: url("./OpenSans/OpenSans-Light.ttf");
+    font-weight: 500;
+  }
