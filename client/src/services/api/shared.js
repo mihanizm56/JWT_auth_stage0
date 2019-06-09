@@ -58,3 +58,21 @@ export const fetchReviewsRequest = (ms, data) => {
 		}, 100)
 	);
 };
+
+export const fetchAddReviewRequest = (ms, data) => {
+	return new Promise(res =>
+		setTimeout(() => {
+			console.log("check");
+			res({ data: testReview });
+		}, 100)
+	);
+};
+
+export const fetchDeleteReviewRequest = (ms, data) => {
+	return new Promise(res =>
+		setTimeout(() => {
+			console.log("check");
+			res({ message:'success' });
+		}, 100)
+	);
+};
