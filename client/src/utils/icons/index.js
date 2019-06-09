@@ -1,12 +1,17 @@
 //иконки вставляем через export default
-
-// import mainLogoSmallIcon from "../../assets/images/icons/main-logo/img/main-logo-small.svg";
+import arrowIcon from "../../assets/icons/arrow.svg";
+import plusIcon from "../../assets/icons/plus.svg";
+import deleteIcon from "../../assets/icons/basket.svg";
 
 export const getIcon = (name: string) => {
 	console.log(`test getIcon, icon-name=${name}`);
 	switch (name) {
-		// case "hare-small":
-		// 	return hareSmallImage;
+		case "icon-arrow":
+			return arrowIcon;
+		case "icon-plus":
+			return plusIcon;
+		case "icon-delete":
+			return deleteIcon;
 
 		default:
 			return null;

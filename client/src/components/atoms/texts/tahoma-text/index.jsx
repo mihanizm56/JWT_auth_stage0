@@ -1,5 +1,6 @@
 //
 import React, { Node, createRef } from "react";
+import classNames from "classnames";
 import "./TahomaText.css";
 
 // type TahomaTextProps = {
@@ -15,9 +16,12 @@ import "./TahomaText.css";
 // 	withRefClick?: Function,
 // };
 
-export const TahomaText = ({ text, inlineStyles }: TahomaTextProps): Node => {
+export const TahomaText = ({ text, inlineStyles, classname }: TahomaTextProps): Node => {
 	return (
-		<p style={{ ...inlineStyles }} className="tahoma-text">
+		<p
+			style={{ ...inlineStyles }}
+			className={classNames(`tahoma-text ${classname ? `tahoma-text--${classname}` : ""}`)}
+		>
 			{text}
 		</p>
 	);

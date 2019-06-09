@@ -1,12 +1,17 @@
 //
 import React, { Node, createRef } from "react";
+import classNames from "classnames";
 import "./VerdanaText.css";
 
 export const VerdanaText = (props: VerdanaTextProps): Node => {
-	const { text, inlineStyles } = props;
+	const { text, inlineStyles, classname } = props;
+	console.log("/////", classname);
 
 	return (
-		<p style={{ ...inlineStyles }} className="verdana-text">
+		<p
+			style={{ ...inlineStyles }}
+			className={classNames(`verdana-text ${classname ? `verdana-text--${classname}` : ""}`)}
+		>
 			{text}
 		</p>
 	);

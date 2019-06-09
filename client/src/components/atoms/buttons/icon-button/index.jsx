@@ -1,6 +1,6 @@
 //
 import React, { memo } from "react";
-import { InteractiveSVGIcon } from "../../svgComponents";
+import { InteractiveSVGIcon } from "../../svg-components";
 import "./icon-button.css";
 
 type IconButtonPropsType = {

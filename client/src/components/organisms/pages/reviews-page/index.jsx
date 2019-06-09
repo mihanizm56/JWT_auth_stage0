@@ -3,7 +3,7 @@ import { ReviewBox } from "../../../molecules/boxes/ReviewBox";
 
 export const ReviewsPage = props => {
 	return (
-		<div className="layout-page layout-page--up-fixed">
+		<div className="layout-page">
 			<ReviewBox />
 		</div>
 	);

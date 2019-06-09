@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { OpenSansText, VerdanaText } from "../../../../components";
+import { OpenSansText, VerdanaText } from "../../../atoms";
 import "./ReviewTextBox.css";
 
 export const ReviewTextBox = memo(({ review, user, login }) => {

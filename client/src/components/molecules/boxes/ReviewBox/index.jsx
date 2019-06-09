@@ -22,7 +22,7 @@ export const ReviewBox = props => {
 					<ReviewTextBox review={review} user={user} login={login} />
 				</div>
 				<div className="review__buttons-wrapper">
-					<Button handleClick={addReview}> написать новый отзыв</Button>
+					<Button onClick={addReview}> написать новый отзыв</Button>
 					<ListButtonsBox onNextClick={onNextClick} onPrevClick={onPrevClick} />
 				</div>
 			</MediaQuery>
@@ -31,7 +31,7 @@ export const ReviewBox = props => {
 					<ReviewTextBox review={review} user={user} login={login} />
 				</div>
 				<div className="review__buttons-wrapper">
-					<Button handleClick={addReview}> написать новый отзыв</Button>
+					<Button onClick={addReview}> написать новый отзыв</Button>
 					<ListButtonsBox onNextClick={onNextClick} onPrevClick={onPrevClick} />
 				</div>
 			</MediaQuery>
@@ -42,7 +42,7 @@ export const ReviewBox = props => {
 				</div>
 				<div className="review__buttons-wrapper">
 					<ListButtonsBox onNextClick={onNextClick} onPrevClick={onPrevClick} />
-					<Button handleClick={addReview}> написать новый отзыв</Button>
+					<Button onClick={addReview}> написать новый отзыв</Button>
 				</div>
 			</MediaQuery>
 		</div>
