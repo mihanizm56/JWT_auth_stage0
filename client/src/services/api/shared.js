@@ -1,4 +1,4 @@
-import { getApi } from "./rest";
+import { getRequest } from "./rest";
 import { reject } from "q";
 
 const appLoginValues = {
@@ -15,7 +15,7 @@ export const sleep = (ms, data) => {
 };
 
 // export const fetchLoginRequest = (email, password) => {
-// return getApi({ endpoint: `https://loft-taxi.glitch.me/auth?username=${email}&password=${password}` }).then(data =>
+// return getRequest({ endpoint: `https://loft-taxi.glitch.me/auth?username=${email}&password=${password}` }).then(data =>
 // 	data.json()
 // );
 // };

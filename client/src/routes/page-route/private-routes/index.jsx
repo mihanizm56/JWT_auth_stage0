@@ -4,7 +4,7 @@ import { ReviewsPageRoute } from "./reviews-page-route";
 
 export const PrivateRoute = ({ loginState }) => {
 	return !loginState ? (
-		<Redirect to="/login" />
+		<Redirect to="/auth" />
 	) : (
 		<Switch>
 			<ReviewsPageRoute exact path="/reviews" />

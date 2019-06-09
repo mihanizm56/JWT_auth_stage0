@@ -1,16 +1,14 @@
 import React from "react";
-import { AuthForm } from "../../../molecules";
-import { AuthStoreProvider, AuthFormProvider } from "../../../../containers";
-import "./LoginPage.css";
+import { LoginForm } from "../../../molecules";
+import { LoginFormProvider } from "../../../../containers";
+import "./login-page.css";
 
 export const LoginPage = () => {
 	return (
-		<div className="layout-page">
-			<AuthStoreProvider>
-				<AuthFormProvider>
-					<AuthForm />
-				</AuthFormProvider>
-			</AuthStoreProvider>
+		<div className="login-page">
+			<LoginFormProvider>
+				<LoginForm />
+			</LoginFormProvider>
 		</div>
 	);
 };
