@@ -11,7 +11,7 @@ export const loginRequestAction = ({ email, password }) => ({
 	payload: { email, password },
 });
 
-export const newUserRequestAction = ({ email, password }) => ({
+export const newUserRequestAction = ({ email, password, user }) => ({
 	type: LOGIN_STATE_PENDING,
-	payload: { email, password },
+	payload: { email, password, user },
 });

@@ -26,7 +26,21 @@ const testReview = {
 	review: "test_review",
 };
 
-export const fetchLoginRequest = ({ login, password }) => {
+export const fetchLoginRequest = (login, password, user) => {
+	console.log("запрос на создание пользователя", login, password, user);
+
+	return new Promise((resolve, reject) =>
+		setTimeout(() => {
+			console.log("check");
+			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" } });
+			// reject({ error: "test-error" });
+		}, 100)
+	);
+};
+
+export const fetchAuthRequest = (login, password) => {
+	console.log("запрос на получение доступа уже существующему пользователю", login, password);
+
 	return new Promise((resolve, reject) =>
 		setTimeout(() => {
 			console.log("check");
