@@ -27,3 +27,15 @@
     src: url("./OpenSans/OpenSans-Light.ttf");
     font-weight: 500;
   }
+
+  @font-face {
+    font-family: 'Tahoma';
+    src: url("./Tahoma/Tahoma.ttf");
+    font-weight: 500;
+  }
+
+  @font-face {
+    font-family: 'Tahoma-Bold';
+    src: url("./Tahoma/Tahoma-Bold.ttf");
+    font-weight: 500;
+  }

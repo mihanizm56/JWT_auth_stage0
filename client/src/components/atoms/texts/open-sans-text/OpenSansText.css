@@ -1,0 +1,113 @@
+/* default class */
+
+.open-sans-text {
+    font-size: 10px;
+    font-family: "OpenSans", Geneva, sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+.open-sans-text--bold {
+    font-family: "OpenSans-Bold", Geneva, sans-serif;
+}
+
+.open-sans-text--ligth {
+    font-family: "OpenSans-Light", Geneva, sans-serif;
+}
+
+/* FormAdditionalParagraph */
+
+.open-sans-text--form-additional-paragraph {
+    font-size: 16px;
+    color: rgb(68, 68, 68);
+    line-height: 1.875;
+}
+
+/* TextEmailContact */
+
+.open-sans-text--text-email-contact {
+    font-size: 16px;
+    color: rgb(68, 68, 68);
+    line-height: 1.875;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.open-sans-text--text-email-contact:hover {
+    color: #77D2C4;
+}
+
+/* error modal text */
+
+.open-sans-text--error-box__text {
+    font-size: 20px;
+    line-height: 1.875;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+@media (max-width: 767px) {
+    .open-sans-text--text-email-contact {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+}
+
+/* TextForItems */
+
+.open-sans-text--text-card {
+    font-size: 14px;
+    color: rgb(68, 68, 68);
+    line-height: 2;
+}
+
+/* TextForVideo */
+
+.open-sans-text--text-video {
+    font-size: 16px;
+    color: rgb(68, 68, 68);
+    line-height: 1.875;
+}
+
+@media (max-width: 767px) {
+    .text-video {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+}
+
+/* FormLabelParagraph */
+
+.open-sans-text--title-form-label-paragraph {
+    font-size: 16px;
+    color: rgb(99, 209, 187);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+/* TextForButton */
+
+.open-sans-text--text-button {
+    font-size: 16px;
+    color: rgb(68, 68, 68);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+/* TextForLoginInReview */
+
+.open-sans-text--review-login-text {
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    line-height: 1.5;
+}
+
+/* WeeklyHitBox */
+
+.open-sans-text--green-paragraph-index-small {
+    color: #63D1BB;
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 1;
+}

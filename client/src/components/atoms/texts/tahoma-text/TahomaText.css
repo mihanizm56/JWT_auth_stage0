@@ -1,0 +1,20 @@
+.tahoma-text{
+    font-family: 'Tahoma', Geneva, sans-serif;
+    color:red;
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.tahoma-text--bold {
+    font-family: 'Tahoma-Bold', Geneva, sans-serif;
+}
+
+/* GreenCardParagraph */
+
+.tahoma-text--green-card-paragraph {
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    line-height: 1.5;
+}
+

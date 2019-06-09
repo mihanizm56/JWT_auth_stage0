@@ -1,14 +1,10 @@
 import React from "react";
-import { CredentialsStoreProvider } from "../../../../containers";
-import { CredentialLayout } from "../../global-package/layouts";
+import { ReviewBox } from "../../../molecules/boxes/ReviewBox";
 
 export const ReviewsPage = props => {
 	return (
 		<div className="layout-page layout-page--up-fixed">
-			{/* <CredentialsStoreProvider> */}
-			{/* <CredentialLayout {...props} /> */}
-			{/* </CredentialsStoreProvider> */}
-			reviews page
+			<ReviewBox />
 		</div>
 	);
 };

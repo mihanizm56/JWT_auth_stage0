@@ -1,2 +1,2 @@
-export * from "./text-field";
+export * from "./texts";
 export * from "./user-button";
