@@ -3,32 +3,34 @@ import { connect } from "react-redux";
 import { loginRequestAction, logoutAction, getLoginState } from "../../../redux/modules/auth";
 
 class WrappedContainer extends Component {
-	signInUser = ({ email, password }) => {
-		if (email && password) {
-			this.props.signIn(email, password);
-		}
+	signOutUser = () => {
+		this.props.signOut();
 	};
 
 	render() {
-		return React.Children.map(this.props.children, child => React.cloneElement(child, { signInUser: this.signInUser }));
+		const { children, signOut, loginState } = this.props;
+
+		return React.Children.map(children, child =>
+			React.cloneElement(child, { signOutUser: this.signOutUser, loginState })
+		);
 	}
 }
 
 const mapStateToProps = store => {
 	return {
-		loggedIn: getLoginState(store),
+		loginState: getLoginState(store),
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		signIn(email, password) {
-			dispatch(loginRequestAction(email, password));
+		signOut() {
+			dispatch(logoutAction());
 		},
 	};
 };
 
-export const AuthLoginProvider = connect(
+export const AuthStoreProvider = connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(WrappedContainer);

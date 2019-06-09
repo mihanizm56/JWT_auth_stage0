@@ -6,8 +6,10 @@ export function* authSaga(action) {
 	const { email, password } = action.payload;
 
 	if (email && password) {
-		const resultOfRequest = yield call(fetchLoginRequest, email, password);
 		try {
+			const resultOfRequest = yield call(fetchLoginRequest, email, password);
+			console.log("/////", resultOfRequest);
+
 			if (resultOfRequest.data) {
 				yield put(loginSuccessAction());
 			} else {

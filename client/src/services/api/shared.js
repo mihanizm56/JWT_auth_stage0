@@ -1,4 +1,5 @@
 import { getApi } from "./rest";
+import { reject } from "q";
 
 const appLoginValues = {
 	email: "test@test.com",
@@ -26,10 +27,11 @@ const testReview = {
 };
 
 export const fetchLoginRequest = ({ login, password }) => {
-	return new Promise(res =>
+	return new Promise((resolve, reject) =>
 		setTimeout(() => {
 			console.log("check");
-			res({ data: { access_token: "test_token", refresh_token: "test_refresh_token" } });
+			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" } });
+			// reject({ error: "test-error" });
 		}, 100)
 	);
 };

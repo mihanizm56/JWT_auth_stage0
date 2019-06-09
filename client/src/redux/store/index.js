@@ -9,6 +9,7 @@ export const createAppStore = savedState => {
 
 	const store = createStore(
 		enableBatching(rootReducer),
+		savedState,
 		compose(
 			applyMiddleware(sagaMiddleware),
 			window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f

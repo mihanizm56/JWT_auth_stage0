@@ -6,7 +6,6 @@ import { PrivateRoute } from "../page-route/private-routes";
 export const MainLayout = ({ loginState }) => {
 	return (
 		<Switch>
-			{/* <PublicRoute exact path="/login" /> */}
 			<LoginPageRoute exact path="/login" loginState={loginState} />
 			<PrivateRoute loginState={loginState} />
 		</Switch>
