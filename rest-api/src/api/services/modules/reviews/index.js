@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+require("../../../models/reviews");
+
 // find all reviews from db
 module.exports.getAllReviews = () => {
 	const Review = mongoose.model("Review");
