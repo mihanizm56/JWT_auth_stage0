@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// mongoose db events listeners
+// mongoose db event listeners
 
 mongoose.connection.on("error", function(err) {
 	console.log("Mongoose connection error: " + err);

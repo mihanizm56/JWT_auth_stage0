@@ -1,16 +1,20 @@
 import { call, put } from "redux-saga/effects";
 import { loginSuccessAction, loginFailedAction } from "./actions";
-import { fetchLoginRequest, fetchAuthRequest } from "../../../services";
+import { fetchLoginRequest, fetchAuthRequest, deleteUser, deleteTokens, saveUser, saveTokens } from "../../../services";
 
 export function* authSaga(action) {
-	const { email, password } = action.payload;
+	const { login, password } = action.payload;
 
-	if (email && password) {
+	if (login && password) {
 		try {
-			const resultOfRequest = yield call(fetchAuthRequest, email, password);
+			const resultOfRequest = yield call(fetchAuthRequest, login, password);
+			console.log("check resultOfRequest", resultOfRequest);
+			const { data: { access_token, refresh_token } = {} } = resultOfRequest;
 
-			if (resultOfRequest.data) {
+			if (access_token && refresh_token) {
 				yield put(loginSuccessAction());
+				saveUser(login);
+				saveTokens(access_token, refresh_token);
 			} else {
 				yield put(loginFailedAction());
 			}
@@ -21,14 +25,17 @@ export function* authSaga(action) {
 }
 
 export function* loginSaga(action) {
-	const { email, password, user } = action.payload;
+	const { login, password, user } = action.payload;
 
-	if (email && password && user) {
+	if (login && password && user) {
 		try {
-			const resultOfRequest = yield call(fetchLoginRequest, email, password);
+			const resultOfRequest = yield call(fetchLoginRequest, login, password);
+			const { data: { access_token, refresh_token } = {} } = resultOfRequest;
 
-			if (resultOfRequest.data) {
+			if (access_token && refresh_token) {
 				yield put(loginSuccessAction());
+				saveUser(login);
+				saveTokens(access_token, refresh_token);
 			} else {
 				yield put(loginFailedAction());
 			}
@@ -36,4 +43,10 @@ export function* loginSaga(action) {
 			yield put(loginFailedAction());
 		}
 	}
+}
+
+export function* logoutSaga() {
+	deleteUser();
+	deleteTokens();
+	console.log("user was removed");
 }

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// require model of reviews
 require("../../../models/reviews");
 
 // find all reviews from db

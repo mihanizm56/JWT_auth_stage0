@@ -13,11 +13,11 @@ import { fetchLoginRequest } from "../../api";
 // 		}
 
 // 		if (!data || !access_token || !refresh_token) {
-// 			resultError.email = "Неверный логин";
+// 			resultError.login = "Неверный логин";
 // 			resultError.password = "Неправильный пароль";
 // 		}
 
-// 		if (resultError.email || resultError.password) {
+// 		if (resultError.login || resultError.password) {
 // 			console.log("error", resultError);
 // 			throw resultError;
 // 		}

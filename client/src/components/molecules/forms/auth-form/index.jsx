@@ -15,7 +15,7 @@ export const AuthForm = props => {
 			<form onSubmit={handleSubmit} className="form">
 				<h1 className="form__title">Войти</h1>
 				<div className="form__field">
-					<Field name="email" component={renderTextField} normalize={normalizeText} label="Логин пользователя *" />
+					<Field name="login" component={renderTextField} normalize={normalizeText} label="Логин пользователя *" />
 				</div>
 				<div className="form__field">
 					<Field

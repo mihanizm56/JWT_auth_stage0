@@ -3,8 +3,8 @@ import { reduxForm } from "redux-form";
 // import { asyncValidateForLogin } from "../../../services/validation";
 import { newUserRequestAction } from "../../../redux/modules/auth";
 
-const submitLoginData = ({ email, password, user }, dispatch) =>
-	dispatch(newUserRequestAction({ email, password, user }));
+const submitLoginData = ({ login, password, user }, dispatch) =>
+	dispatch(newUserRequestAction({ login, password, user }));
 
 class WrappedContainer extends Component {
 	normalizeText = value => value.replace(/^\s+/, "");
@@ -25,5 +25,5 @@ export const LoginFormProvider = reduxForm({
 	form: "login",
 	onSubmit: submitLoginData,
 	// asyncValidate: asyncValidateForLogin,
-	asyncBlurFields: ["email", "password", "user"],
+	asyncBlurFields: ["login", "password", "user"],
 })(WrappedContainer);
