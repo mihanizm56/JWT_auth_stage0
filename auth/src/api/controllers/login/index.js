@@ -1,6 +1,5 @@
 const { addUserInDb } = require("../../services/modules/auth");
 const { createTokenPair } = require("../../services/modules/tokens");
-const { getRefreshPath } = require("../../services/modules/paths");
 
 /// add the new user to db
 module.exports.loginUserController = (req, res) => {
@@ -25,10 +24,8 @@ module.exports.loginUserController = (req, res) => {
 		}
 
 		const { access_token, refresh_token } = createTokenPair(login);
-		const refreshPath = getRefreshPath();
-
 		console.log("user added ", newUser);
 
-		return res.status(200).send({ access_token, refresh_token, refreshPath });
+		return res.status(200).send({ access_token, refresh_token });
 	});
 };
