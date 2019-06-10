@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { reviews: reviewsData } = require("../../../models/reviews");
 
 // find all reviews from db
 module.exports.getAllReviews = () => {
