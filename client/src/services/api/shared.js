@@ -9,11 +9,18 @@ export const sleep = (ms, data) => {
 	);
 };
 
-const testReview = {
-	login: "test_login",
-	user: "test_user",
-	review: "test_review",
-};
+const testReviews = [
+	{
+		login: "test_login_1",
+		user: "test_user_1",
+		review: "test_review_1",
+	},
+	{
+		login: "test_login_2",
+		user: "test_user_2",
+		review: "test_review_2",
+	},
+];
 
 export const fetchLoginRequest = (login, password, user) => {
 	console.log("запрос на создание пользователя", login, password, user);
@@ -52,13 +59,10 @@ export const fetchAuthRequest = (login, password) => {
 // };
 
 export const fetchReviewsRequest = (ms, data) => {
-	console.log("localStorage", localStorage);
-	// const {} = localStorage
-
 	return new Promise(res =>
 		setTimeout(() => {
 			console.log("check");
-			res({ data: testReview });
+			res({ data: { reviews: testReviews } });
 		}, 100)
 	);
 };
@@ -67,7 +71,7 @@ export const fetchAddReviewRequest = (ms, data) => {
 	return new Promise(res =>
 		setTimeout(() => {
 			console.log("check");
-			res({ data: testReview });
+			res({ data: testReviews[0] });
 		}, 100)
 	);
 };

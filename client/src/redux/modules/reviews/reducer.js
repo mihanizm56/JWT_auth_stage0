@@ -7,7 +7,7 @@ import {
 	SET_SENDING_STATE_DONE,
 	SET_SUCCESS_SENDING_STATE_DONE,
 	RESET_SUCCESS_SENDING_STATE_DONE,
-	ERROR,
+	SET_REVIEWS,
 } from "./constants";
 
 import { errors } from "../../../constants";
@@ -20,7 +20,7 @@ const initialState = {
 	error: null,
 };
 
-const reviewsReducer = (state = initialState, action) => {
+const reviewsStorage = (state = initialState, action) => {
 	switch (action.type) {
 		// case ADD_THE_REVIEW:
 		// 	return { ...state, reviewList: action.payload };
@@ -36,7 +36,7 @@ const reviewsReducer = (state = initialState, action) => {
 		// 	return { ...state, sendingIsSuccess: null };
 		// case SET_SUCCESS_SENDING_STATE_DONE:
 		// 	return { ...state, sendingIsSuccess: true };
-		case GET_REVIEWS:
+		case SET_REVIEWS:
 			return { ...state, reviewList: action.payload };
 		// case NETWORK_ERROR:
 		// 	return { ...state, error: errors.NETWORK_ERROR };
@@ -46,4 +46,4 @@ const reviewsReducer = (state = initialState, action) => {
 	}
 };
 
-export default reviewsReducer;
+export default reviewsStorage;

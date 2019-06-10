@@ -35,6 +35,7 @@
     .review-text-box__text {
         margin-top: 66px;
         padding-right: 150px;
+        height: 90px;
         box-sizing: border-box;
     }
 

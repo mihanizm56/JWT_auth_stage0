@@ -25,7 +25,7 @@ class WrappedContainer extends Component {
 	}
 
 	componentDidUpdate() {
-		// console.log("ReviewsStoreProvider updated");
+		console.log("ReviewsStoreProvider updated");
 		// console.log(this.props);
 	}
 

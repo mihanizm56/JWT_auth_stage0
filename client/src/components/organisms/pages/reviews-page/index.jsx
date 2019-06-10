@@ -1,10 +1,13 @@
 import React from "react";
-import { ReviewBox } from "../../../molecules/boxes/ReviewBox";
+import { ListReviewsBox } from "../../../molecules/boxes/ListReviewsBox";
+import { ReviewsStoreProvider } from "../../../../containers";
 
 export const ReviewsPage = props => {
 	return (
 		<div className="layout-page">
-			<ReviewBox />
+			<ReviewsStoreProvider>
+				<ListReviewsBox />
+			</ReviewsStoreProvider>
 		</div>
 	);
 };

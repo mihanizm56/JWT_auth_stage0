@@ -56,3 +56,19 @@
 //         };
 //     }
 // };
+
+import { call, put } from "redux-saga/effects";
+import { fetchReviewsRequest } from "../../../services/api";
+import { getReviewsAction, reviewsErrorAction } from "./actions";
+
+export function* fetchReviewsSaga(action) {
+	const resultOfRequest = yield call(fetchReviewsRequest);
+	const { data: { reviews } = {} } = resultOfRequest;
+
+	if (reviews) {
+		yield put(getReviewsAction(reviews));
+	} else {
+		yield put(reviewsErrorAction());
+	}
+	console.log("request for reviews", resultOfRequest);
+}
