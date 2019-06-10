@@ -50,9 +50,11 @@ export const ReviewBox = props => {
 };
 
 ReviewBox.defaultProps = {
-	review: "review",
-	user: "user",
-	login: "login",
+	login: "@misssssiskras",
+	user: "Анастасия Красильникова",
+	review:
+		"Я молодая мама, но все равно фотографии не набирали и близко такого количества лайков, как у популярных инстамамочек. В отчаянии, я накупила аксессуаров и игрушек в Мишке и мои фотографии сразу стали более стильнее, а также набирают больше лайков!",
+
 	onNextClick: () => console.log("onNextClick"),
 	onPrevClick: () => console.log("onPrevClick"),
 	addReview: () => console.log("addReview"),

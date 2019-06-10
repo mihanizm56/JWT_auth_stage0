@@ -1,6 +1,17 @@
 import React, { memo } from "react";
+
 import { OpenSansText, VerdanaText } from "../../../atoms";
 import "./ReviewTextBox.css";
+
+const MAX_REVIEW_TEXT_LENGTH = 180;
+
+const sliceReview = text => {
+	const textLength = text.length;
+
+	if (textLength > MAX_REVIEW_TEXT_LENGTH) return `${text.slice(0, MAX_REVIEW_TEXT_LENGTH)}...`;
+
+	return text;
+};
 
 export const ReviewTextBox = memo(({ review, user, login }) => {
 	return (
@@ -9,7 +20,7 @@ export const ReviewTextBox = memo(({ review, user, login }) => {
 				<VerdanaText text="Отзывы" classname="main-title" bold />
 			</div>
 			<div className="review-text-box__text">
-				<OpenSansText classname="text-video" text={review} />
+				<OpenSansText classname="open-sans-text" text={sliceReview(review)} />
 			</div>
 			<div className="review-text__login-wrapper">
 				{/* {getAuthorName(name, surname)} */}
