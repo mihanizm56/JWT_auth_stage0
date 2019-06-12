@@ -1,6 +1,14 @@
 import { call, put } from "redux-saga/effects";
 import { loginSuccessAction, loginFailedAction } from "./actions";
-import { fetchLoginRequest, fetchAuthRequest, deleteUser, deleteTokens, saveUser, saveTokens } from "../../../services";
+import {
+	fetchLoginRequest,
+	fetchAuthRequest,
+	deleteUser,
+	deleteTokens,
+	saveUser,
+	saveTokens,
+	fetchRefreshRequest,
+} from "../../../services";
 
 export function* authSaga(action) {
 	const { login, password } = action.payload;
@@ -17,9 +25,11 @@ export function* authSaga(action) {
 				saveTokens(access_token, refresh_token);
 			} else {
 				yield put(loginFailedAction());
+				yield call(logoutSaga);
 			}
 		} catch (error) {
 			yield put(loginFailedAction());
+			yield call(logoutSaga);
 		}
 	}
 }
@@ -38,6 +48,29 @@ export function* loginSaga(action) {
 				saveTokens(access_token, refresh_token);
 			} else {
 				yield put(loginFailedAction());
+				yield call(logoutSaga);
+			}
+		} catch (error) {
+			yield put(loginFailedAction());
+			yield call(logoutSaga);
+		}
+	}
+}
+
+export function* refreshSaga(action) {
+	const { refresh_token } = action.payload;
+
+	if (refresh_token) {
+		try {
+			const resultOfRequest = yield call(fetchRefreshRequest, refresh_token);
+			const { data: { access_token, refresh_token } = {} } = resultOfRequest;
+
+			if (access_token && refresh_token) {
+				console.log("tokens saved");
+				saveTokens(access_token, refresh_token);
+			} else {
+				yield put(loginFailedAction());
+				yield call(logoutSaga);
 			}
 		} catch (error) {
 			yield put(loginFailedAction());

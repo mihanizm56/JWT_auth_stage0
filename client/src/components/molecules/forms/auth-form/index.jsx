@@ -11,7 +11,7 @@ export const AuthForm = props => {
 	const { signInUser, handleSubmit, normalizeText, onSubmit } = props;
 
 	return (
-		<div className="form-wrapper">
+		<div className="form-wrapper form-wrapper--min-size">
 			<form onSubmit={handleSubmit} className="form">
 				<h1 className="form__title">Войти</h1>
 				<div className="form__field">

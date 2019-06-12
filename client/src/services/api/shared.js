@@ -1,4 +1,4 @@
-import { getRequest } from "./rest";
+// import { getRequest } from "./rest";
 import { reject } from "q";
 
 export const sleep = (ms, data) => {
@@ -27,7 +27,7 @@ export const fetchLoginRequest = (login, password, user) => {
 
 	return new Promise((resolve, reject) =>
 		setTimeout(() => {
-			console.log("check");
+			console.log("check fetchLoginRequest");
 			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" }, message: "success" });
 			// reject({ error: "test-error" });
 		}, 100)
@@ -39,24 +39,24 @@ export const fetchAuthRequest = (login, password) => {
 
 	return new Promise((resolve, reject) =>
 		setTimeout(() => {
-			console.log("check");
+			console.log("check fetchAuthRequest");
 			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" }, message: "success" });
 			// reject({ error: "test-error" });
 		}, 100)
 	);
 };
 
-// export const fetchRefreshRequest = (login, password) => {
-// 	console.log("запрос на получение доступа уже существующему пользователю", login, password);
+export const fetchRefreshRequest = (login, password) => {
+	console.log("запрос на обновление токена", login, password);
 
-// 	return new Promise((resolve, reject) =>
-// 		setTimeout(() => {
-// 			console.log("check");
-// 			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" }, message: "success" });
-// 			// reject({ error: "test-error" });
-// 		}, 100)
-// 	);
-// };
+	return new Promise((resolve, reject) =>
+		setTimeout(() => {
+			console.log("check refresh fetchRefreshRequest");
+			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" }, message: "success" });
+			// reject({ error: "test-error" });
+		}, 100)
+	);
+};
 
 export const fetchReviewsRequest = (ms, data) => {
 	return new Promise(res =>

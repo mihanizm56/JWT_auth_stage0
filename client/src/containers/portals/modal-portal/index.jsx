@@ -16,7 +16,7 @@ export class ModalPortal extends Component {
 	}
 
 	render() {
-		const { show, children } = this.props;
-		return show ? createPortal(children, document.getElementById(this.id)) : null;
+		const { children } = this.props;
+		return createPortal(children, document.getElementById(this.id));
 	}
 }
