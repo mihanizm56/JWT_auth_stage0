@@ -1,6 +1,6 @@
 /* ButtonWrappedIcon */
 
-.button-wrapped-icon{
+.button-wrapped-icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@
 
 /* ButtonPlayVideo */
 
-.button-play-video{
+.button-play-video {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,42 +18,8 @@
     outline: none;
 }
 
-
-@media (max-width: 767px) {
-    .button-play-video{
-        width: 110px;
-        height: 82px;
-    }
-}
-
-@media (min-width: 768px) {
-    .button-play-video{
-        width: 102px;
-        height: 77px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .button-play-video{
-        width: 102px;
-        height: 77px;
-    }
-}
-
 /* ListButtonsBox */
 
-.button-arrow_next{
+.button-arrow_next {
     transform: rotate(180deg);
-}
-
-@media (max-width: 767px) { 
-    .button-arrow_prev,
-    .button-arrow_next{
-        width: 50%;
-        display: flex;
-        height: 50px;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
 }

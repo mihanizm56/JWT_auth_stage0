@@ -1,18 +1,18 @@
-.verdana-text{
+.verdana-text {
     font-family: "Verdana", Geneva, sans-serif;
-    color:red;
+    color: red;
     font-size: 10px;
     margin: 0;
     padding: 0;
 }
 
-.verdana-text--bold{
+.verdana-text--bold {
     font-family: "Verdana-Bold", Geneva, sans-serif;
 }
 
-/* RegularAdditionalParagraph */ 
+/* RegularAdditionalParagraph */
 
-.verdana-text--regular-additional-paragraph{
+.verdana-text--regular-additional-paragraph {
     font-size: 14px;
     color: rgb(68, 68, 68);
     line-height: 1.714;
@@ -20,7 +20,7 @@
 
 /* BoldAdditionalParagraph */
 
-.verdana-text--bold-additional-paragraph{
+.verdana-text--bold-additional-paragraph {
     font-size: 14px;
     color: rgb(0, 0, 0);
     line-height: 1.714;
@@ -29,17 +29,17 @@
     cursor: pointer;
 }
 
-.verdana-text--bold-additional-paragraph:hover{
+.verdana-text--bold-additional-paragraph:hover {
     opacity: 0.6;
 }
 
-.verdana-text--bold-additional-paragraph:hover{
+.verdana-text--bold-additional-paragraph:hover {
     opacity: 0.4;
 }
 
 /* FormTextInputField */
 
-.verdana-text--form-name-field-label{
+.verdana-text--form-name-field-label {
     font-size: 19px;
     line-height: 1;
     color: rgb(0, 0, 0);
@@ -47,7 +47,7 @@
 
 /* TextArea */
 
-.verdana-text--textarea{
+.verdana-text--textarea {
     font-size: 19px;
     line-height: 1;
     color: rgb(0, 0, 0);
@@ -55,39 +55,30 @@
 
 /* ParagraphForItemsInTitle */
 
-.verdana-text--paragraph-index-items{
+.verdana-text--paragraph-index-items {
     font-size: 19px;
     color: rgb(0, 0, 0);
     font-weight: bold;
     line-height: 1.2;
 }
 
-@media (max-width: 767px) {
-    .verdana-text--paragraph-index-items{
-        font-size: 16px;
-        color: rgb(0, 0, 0);
-        font-weight: bold;
-        line-height: 1.2;
-    }
-} 
-
 /* ParagraphForCards */
 
-.verdana-text--paragraph-card{
+.verdana-text--paragraph-card {
     font-size: 16px;
     color: rgb(0, 0, 0);
     line-height: 1.333;
     opacity: 1;
     transition: .2s;
 }
-  
-.verdana-text--paragraph-card:hover{
+
+.verdana-text--paragraph-card:hover {
     opacity: 0.6;
 }
 
 /* TextForHeaderBasketIcon */
 
-.verdana-text--text-header-basket-icon{
+.verdana-text--text-header-basket-icon {
     font-size: 16px;
     color: rgb(0, 0, 0);
     line-height: 1.5;
@@ -95,17 +86,17 @@
     cursor: pointer;
 }
 
-.verdana-text--text-header-basket-icon:hover{
-    opacity:0.6;
+.verdana-text--text-header-basket-icon:hover {
+    opacity: 0.6;
 }
 
-.verdana-text--text-header-basket-icon:active{
-    opacity:0.4;
+.verdana-text--text-header-basket-icon:active {
+    opacity: 0.4;
 }
 
 /* NameForReview */
 
-.verdana-text--review-text-value{
+.verdana-text--review-text-value {
     font-size: 16px;
     color: rgb(0, 0, 0);
     font-weight: bold;
@@ -114,57 +105,33 @@
 
 /* FooterTextLogo */
 
-.verdana-text--footer__text-logo{
+.verdana-text--footer__text-logo {
     font-size: 18px;
     color: black;
     line-height: 1;
 }
 
-@media (max-width: 767px) {
-    .verdana-text--footer__text-logo{
-        font-size: 16px;
-    }
-}
-
 /* MainTitle */
 
-.verdana-text--main-title{
+.verdana-text--main-title {
     padding: 0;
     margin: 0;
     font-family: "Verdana-Bold", Geneva, sans-serif;
     color: rgb(35, 31, 32);
     line-height: 1.14;
-    transform: matrix( 1.02465030736761,0,0,1.02465030736761,0,0);
-    -moz-transform: matrix( 1.02465030736761,0,0,1.02465030736761,0,0);
-    -webkit-transform: matrix( 1.02465030736761,0,0,1.02465030736761,0,0);
-    -ms-transform: matrix( 1.02465030736761,0,0,1.02465030736761,0,0);
+    transform: matrix( 1.02465030736761, 0, 0, 1.02465030736761, 0, 0);
+    -moz-transform: matrix( 1.02465030736761, 0, 0, 1.02465030736761, 0, 0);
+    -webkit-transform: matrix( 1.02465030736761, 0, 0, 1.02465030736761, 0, 0);
+    -ms-transform: matrix( 1.02465030736761, 0, 0, 1.02465030736761, 0, 0);
 }
 
-.main-title--margined{
+.main-title--margined {
     margin-bottom: 60px;
 }
 
-@media (max-width: 767px) {    
-    .verdana-text--main-title{
-        font-size: 22px;
-    }
-}
+/* BoldParagraph */
 
-  @media (min-width: 768px) {
-    .verdana-text--main-title{
-        font-size: 39px;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    .verdana-text--main-title{
-        font-size: 48.797px;
-    }
-  }
-
-  /* BoldParagraph */
-
-.verdana-text--bold-paragraph{
+.verdana-text--bold-paragraph {
     font-size: 16px;
     font-family: "Verdana-Bold", Geneva, sans-serif;
     color: rgb(0, 0, 0);
@@ -174,31 +141,25 @@
     transition: .2s;
 }
 
-.verdana-text--bold-paragraph:hover{
-    opacity:0.6;
+.verdana-text--bold-paragraph:hover {
+    opacity: 0.6;
 }
 
-.verdana-text--bold-paragraph:active{
-    opacity:0.4;
+.verdana-text--bold-paragraph:active {
+    opacity: 0.4;
 }
 
 /* LabelForOrderForm */
 
-.verdana-text--label-check-box{
+.verdana-text--label-check-box {
     font-size: 18px;
     color: rgb(0, 0, 0);
     line-height: 1;
 }
-  
-@media (max-width: 767px) {
-    .verdana-text--label-check-box{
-        width: 160px;
-    }
-}
 
 /* LabelForUserName */
 
-.verdana-text--user-name{
+.verdana-text--user-name {
     font-size: 18px;
     color: rgb(0, 0, 0);
     line-height: 1;
