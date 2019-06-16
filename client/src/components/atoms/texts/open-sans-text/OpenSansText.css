@@ -47,13 +47,6 @@
     word-wrap: break-word;
 }
 
-@media (max-width: 767px) {
-    .open-sans-text--text-email-contact {
-        font-size: 15px;
-        line-height: 1.5;
-    }
-}
-
 /* TextForItems */
 
 .open-sans-text--text-card {
@@ -68,13 +61,6 @@
     font-size: 16px;
     color: rgb(68, 68, 68);
     line-height: 1.875;
-}
-
-@media (max-width: 767px) {
-    .open-sans-text {
-        font-size: 15px;
-        line-height: 1.5;
-    }
 }
 
 /* FormLabelParagraph */

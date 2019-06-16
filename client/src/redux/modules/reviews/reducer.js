@@ -24,10 +24,10 @@ const reviewsStorage = (state = initialState, action) => {
 	switch (action.type) {
 		// case ADD_THE_REVIEW:
 		// 	return { ...state, reviewList: action.payload };
-		// case OPEN_MODAL_REVIEW:
-		// 	return { ...state, modalReviewsOpen: true };
-		// case CLOSE_MODAL_REVIEW:
-		// 	return { ...state, modalReviewsOpen: false };
+		case OPEN_MODAL_REVIEW:
+			return { ...state, modalReviewsOpen: true };
+		case CLOSE_MODAL_REVIEW:
+			return { ...state, modalReviewsOpen: false };
 		// case SET_SENDING_STATE_LOADING:
 		// 	return { ...state, sendingLoading: true };
 		// case SET_SENDING_STATE_DONE:

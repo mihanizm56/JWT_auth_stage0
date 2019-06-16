@@ -14,11 +14,6 @@ export const MainWrapper = memo(props => {
 			<AuthStoreProvider>
 				<MainLayout />
 			</AuthStoreProvider>
-			<ModalPortal>
-				<ReviewsFormProvider>
-					<ModalAddReview />
-				</ReviewsFormProvider>
-			</ModalPortal>
 		</div>
 	);
 });
