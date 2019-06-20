@@ -67,11 +67,11 @@ export const fetchReviewsRequest = (ms, data) => {
 	);
 };
 
-export const fetchAddReviewRequest = (ms, data) => {
+export const fetchAddReviewRequest = review => {
 	return new Promise(res =>
 		setTimeout(() => {
 			console.log("check");
-			res({ data: testReviews[0] });
+			res({ review });
 		}, 100)
 	);
 };

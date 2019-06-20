@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-	addReviewRequestAction,
+	addReviewAction,
 	fetchReviewsAction,
 	reviewSelector,
 	sendingRequestStateSelector,
 	sendingSuccessSelector,
-	openModalReviewAction,
-	closeModalReviewAction,
-	modalStateSelector,
 	errorSelector,
 } from "../../../redux/modules/reviews";
 
@@ -38,7 +35,6 @@ class WrappedContainer extends Component {
 const mapStateToProps = store => {
 	return {
 		reviews: reviewSelector(store),
-		// modalReviewIsOpen: modalStateSelector(store),
 		// reviewIsSending: sendingRequestStateSelector(store),
 		// sendingIsSuccess: sendingSuccessSelector(store),
 		// errorReviews: errorSelector(store),
@@ -47,15 +43,9 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		// openReviewsModal() {
-		// 	dispatch(openModalReviewAction());
-		// },
-		// closeReviewsModal() {
-		// 	dispatch(closeModalReviewAction());
-		// },
-		// addReviewInList(value) {
-		// 	dispatch(addReviewRequestAction(value));
-		// },
+		addReviewInList(value) {
+			dispatch(addReviewAction(value));
+		},
 		fetchReviews() {
 			dispatch(fetchReviewsAction());
 		},

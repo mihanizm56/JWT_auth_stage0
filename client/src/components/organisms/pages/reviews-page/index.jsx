@@ -3,17 +3,24 @@ import { ListReviewsBox, ModalAddReview } from "../../../molecules";
 import { ReviewsStoreProvider, ModalPortal, ReviewsFormProvider } from "../../../../containers";
 
 export const ReviewsPage = props => {
-	const { modalOpen } = props.match;
-	console.log("prop ReviewsPage", props.match.params);
+	const {
+		match: {
+			params: { modalOpen },
+			url,
+		},
+	} = props;
+	const modalIsOpened = modalOpen === "add";
+	console.log("props ReviewsPage", props.match);
+	console.log("/////////", modalOpen, modalIsOpened);
 	return (
 		<div className="layout-page">
 			<ReviewsStoreProvider>
-				<ListReviewsBox />
+				<ListReviewsBox fullUrl={url} />
 			</ReviewsStoreProvider>
-			{modalOpen && (
+			{modalIsOpened && (
 				<ModalPortal>
 					<ReviewsFormProvider>
-						<ModalAddReview />
+						<ModalAddReview fullUrl={url} />
 					</ReviewsFormProvider>
 				</ModalPortal>
 			)}

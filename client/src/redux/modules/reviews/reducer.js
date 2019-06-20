@@ -1,5 +1,5 @@
 import {
-	ADD_THE_REVIEW,
+	PUT_THE_REVIEW,
 	GET_REVIEWS,
 	OPEN_MODAL_REVIEW,
 	CLOSE_MODAL_REVIEW,
@@ -22,8 +22,8 @@ const initialState = {
 
 const reviewsStorage = (state = initialState, action) => {
 	switch (action.type) {
-		// case ADD_THE_REVIEW:
-		// 	return { ...state, reviewList: action.payload };
+		case PUT_THE_REVIEW:
+			return { ...state, reviewList: [...state.reviewList, action.payload] };
 		case OPEN_MODAL_REVIEW:
 			return { ...state, modalReviewsOpen: true };
 		case CLOSE_MODAL_REVIEW:

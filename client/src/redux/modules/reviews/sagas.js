@@ -58,8 +58,9 @@
 // };
 
 import { call, put } from "redux-saga/effects";
-import { fetchReviewsRequest } from "../../../services/api";
-import { getReviewsAction, reviewsErrorAction } from "./actions";
+import { push } from "connected-react-router";
+import { fetchReviewsRequest, fetchAddReviewRequest } from "../../../services/api";
+import { getReviewsAction, reviewsErrorAction, putReviewAction } from "./actions";
 
 export function* fetchReviewsSaga(action) {
 	const resultOfRequest = yield call(fetchReviewsRequest);
@@ -71,4 +72,17 @@ export function* fetchReviewsSaga(action) {
 		yield put(reviewsErrorAction());
 	}
 	console.log("request for reviews", resultOfRequest);
+}
+
+export function* fetchAddReviewSaga(action) {
+	const resultOfRequest = yield call(fetchAddReviewRequest, action.payload);
+	console.log("resultOfRequest", resultOfRequest);
+	const { review = {} } = resultOfRequest;
+
+	if (review) {
+		yield put(putReviewAction(review));
+		yield put(push("/reviews"));
+	} else {
+		yield put(reviewsErrorAction());
+	}
 }

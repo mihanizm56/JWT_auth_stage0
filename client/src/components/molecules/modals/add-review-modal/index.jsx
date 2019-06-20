@@ -2,16 +2,22 @@ import React from "react";
 import { Field } from "redux-form";
 import { noop } from "lodash/noop";
 import Button from "@material-ui/core/Button";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { renderTextField } from "../../../atoms";
 
 import "./auth-review-modal.css";
 
-export const ModalAddReview = props => {
-	const { signInUser, handleSubmit, normalizeText, onSubmit } = props;
+const coordinateModalReviewsUrl = fullUrl => `/${fullUrl.split("/").slice(1, -1)}`;
 
+export const ModalAddReview = props => {
+	const { signInUser, handleSubmit, normalizeText, onSubmit, fullUrl } = props;
+
+	const urlToRedirect = coordinateModalReviewsUrl(fullUrl);
 	return (
 		<div className="review-modal-layout">
+			<Link to={urlToRedirect}>
+				<div className="form__overlay" />
+			</Link>
 			<div className="form-wrapper review-modal-wrapper">
 				<form onSubmit={handleSubmit} className="form form--review">
 					<h1 className="form__title">Оставить отзыв</h1>

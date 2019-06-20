@@ -24,6 +24,22 @@
     letter-spacing: 0.00735em;
 }
 
+
+/* form components */
+
+.form__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.8;
+    z-index: 2;
+    cursor: pointer;
+    animation: fadeInOverLay .8s ease-in-out both;
+}
+
 .form-subtitle {
     color: rgba(0, 0, 0, 0.87);
     font-size: 1.25rem;
@@ -42,7 +58,6 @@
     padding: 12px;
 }
 
-/* form components */
 
 .form-wrapper {
     padding: 24px;

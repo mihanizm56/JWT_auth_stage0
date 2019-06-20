@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { reduxForm } from "redux-form";
+import { addReviewAction } from "../../../redux/modules/reviews";
+
+const sendReview = (payload, dispatch) => dispatch(addReviewAction(payload));
 
 class WrappedContainer extends Component {
 	componentDidMount() {
@@ -16,4 +19,5 @@ class WrappedContainer extends Component {
 
 export const ReviewsFormProvider = reduxForm({
 	form: "review-form",
+	onSubmit: sendReview,
 })(WrappedContainer);

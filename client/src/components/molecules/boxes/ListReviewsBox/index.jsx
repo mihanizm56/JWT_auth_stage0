@@ -47,19 +47,19 @@ export class ListReviewsBox extends PureComponent {
 	};
 
 	render() {
+		const { fullUrl } = this.props;
 		const { reviews, indexOfReview } = this.state;
 		const activeReview = reviews[indexOfReview] || {};
 		const { review = "default review", user = "default user", login = "default login" } = activeReview;
-		// const { openReviewsModal } = this.props;
 
 		return (
 			<ReviewBox
+				fullUrl={fullUrl}
 				review={review}
 				user={user}
 				login={login}
 				onNextClick={this.onNextClick}
 				onPrevClick={this.onPrevClick}
-				// addReview={openReviewsModal}
 			/>
 		);
 	}
