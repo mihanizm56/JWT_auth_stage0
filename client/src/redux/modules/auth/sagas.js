@@ -17,12 +17,12 @@ export function* authSaga(action) {
 		try {
 			const resultOfRequest = yield call(fetchAuthRequest, login, password);
 			console.log("check resultOfRequest", resultOfRequest);
-			const { data: { access_token, refresh_token } = {} } = resultOfRequest;
+			const { data: { access_token, refresh_token, expiredIn } = {} } = resultOfRequest;
 
-			if (access_token && refresh_token) {
+			if (access_token && refresh_token && expiredIn) {
 				yield put(loginSuccessAction());
 				saveUser(login);
-				saveTokens(access_token, refresh_token);
+				saveTokens(access_token, refresh_token, expiredIn);
 			} else {
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
@@ -40,12 +40,12 @@ export function* loginSaga(action) {
 	if (login && password && user) {
 		try {
 			const resultOfRequest = yield call(fetchLoginRequest, login, password);
-			const { data: { access_token, refresh_token } = {} } = resultOfRequest;
+			const { data: { access_token, refresh_token, expiredIn } = {} } = resultOfRequest;
 
-			if (access_token && refresh_token) {
+			if (access_token && refresh_token && expiredIn) {
 				yield put(loginSuccessAction());
 				saveUser(login);
-				saveTokens(access_token, refresh_token);
+				saveTokens(access_token, refresh_token, expiredIn);
 			} else {
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
@@ -57,17 +57,18 @@ export function* loginSaga(action) {
 	}
 }
 
-export function* refreshSaga(action) {
-	const { refresh_token } = action.payload;
+export function* refreshSaga(actions) {
+	const { refreshToken } = localStorage;
+	console.log("refreshSaga goes");
 
-	if (refresh_token) {
+	if (refreshToken) {
 		try {
-			const resultOfRequest = yield call(fetchRefreshRequest, refresh_token);
-			const { data: { access_token, refresh_token } = {} } = resultOfRequest;
+			const resultOfRequest = yield call(fetchRefreshRequest, refreshToken);
+			const { data: { access_token, refresh_token, expiredIn } = {} } = resultOfRequest;
 
-			if (access_token && refresh_token) {
-				console.log("tokens saved");
-				saveTokens(access_token, refresh_token);
+			if (access_token && refresh_token && expiredIn) {
+				console.log("tokens saved && refreshed");
+				saveTokens(access_token, refresh_token, expiredIn);
 			} else {
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
@@ -75,6 +76,8 @@ export function* refreshSaga(action) {
 		} catch (error) {
 			yield put(loginFailedAction());
 		}
+	} else {
+		console.log("no refresh_token in localStorage");
 	}
 }
 

@@ -57,7 +57,7 @@ export const getReviewsAction = data => ({
 });
 
 export const reviewsErrorAction = error => {
-	console.log("test loginNetworkErrorAction");
+	console.log("test reviewsErrorAction");
 	return {
 		type: REVIEWS_ERROR,
 		error,

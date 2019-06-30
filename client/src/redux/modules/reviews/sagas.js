@@ -59,8 +59,9 @@
 
 import { call, put } from "redux-saga/effects";
 import { push } from "connected-react-router";
-import { fetchReviewsRequest, fetchAddReviewRequest } from "../../../services/api";
+import { fetchReviewsRequest, fetchAddReviewRequest, fetchRefreshRequest } from "../../../services/api";
 import { getReviewsAction, reviewsErrorAction, putReviewAction } from "./actions";
+import { refreshTokenAction } from "../shared/actions";
 
 export function* fetchReviewsSaga(action) {
 	const resultOfRequest = yield call(fetchReviewsRequest);
@@ -75,11 +76,15 @@ export function* fetchReviewsSaga(action) {
 }
 
 export function* fetchAddReviewSaga(action) {
-	const resultOfRequest = yield call(fetchAddReviewRequest, action.payload);
+	const { accessToken } = localStorage;
+	const resultOfRequest = yield call(fetchAddReviewRequest, accessToken, action.payload);
 	console.log("resultOfRequest", resultOfRequest);
-	const { review = {} } = resultOfRequest;
+	const { review, error } = resultOfRequest;
 
-	if (review) {
+	if (error === "token expired") {
+		yield put(refreshTokenAction());
+		yield fetchAddReviewSaga(action);
+	} else if (review) {
 		yield put(putReviewAction(review));
 		yield put(push("/reviews"));
 	} else {

@@ -1,14 +1,6 @@
-// import { getRequest } from "./rest";
-import { reject } from "q";
+// import { getRequest, postRequest, deleteRequest } from "./rest";
 
-export const sleep = (ms, data) => {
-	return new Promise(res =>
-		setTimeout(() => {
-			res(data);
-		}, ms)
-	);
-};
-
+//// TODO: remove when real api
 const testReviews = [
 	{
 		login: "test_login_1",
@@ -28,7 +20,15 @@ export const fetchLoginRequest = (login, password, user) => {
 	return new Promise((resolve, reject) =>
 		setTimeout(() => {
 			console.log("check fetchLoginRequest");
-			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" }, message: "success" });
+			resolve({
+				data: {
+					access_token: "test_token",
+					refresh_token: "test_refresh_token",
+					expiredIn: new Date().getTime + 20000,
+				},
+				message: "success",
+				error: null,
+			});
 			// reject({ error: "test-error" });
 		}, 100)
 	);
@@ -40,19 +40,34 @@ export const fetchAuthRequest = (login, password) => {
 	return new Promise((resolve, reject) =>
 		setTimeout(() => {
 			console.log("check fetchAuthRequest");
-			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" }, message: "success" });
+			resolve({
+				data: {
+					access_token: "test_token",
+					refresh_token: "test_refresh_token",
+					expiredIn: new Date().getTime + 20000,
+				},
+				message: "success",
+				error: null,
+			});
 			// reject({ error: "test-error" });
 		}, 100)
 	);
 };
 
-export const fetchRefreshRequest = (login, password) => {
-	console.log("запрос на обновление токена", login, password);
+export const fetchRefreshRequest = refresh_token => {
+	console.log("запрос на обновление токена");
 
 	return new Promise((resolve, reject) =>
 		setTimeout(() => {
-			console.log("check refresh fetchRefreshRequest");
-			resolve({ data: { access_token: "test_token", refresh_token: "test_refresh_token" }, message: "success" });
+			resolve({
+				data: {
+					access_token: "test_token_if_refresh",
+					refresh_token: "test_refresh_token_refreshed",
+					expiredIn: new Date().getTime + 20000,
+				},
+				message: "success",
+				error: null,
+			});
 			// reject({ error: "test-error" });
 		}, 100)
 	);
@@ -67,11 +82,19 @@ export const fetchReviewsRequest = (ms, data) => {
 	);
 };
 
-export const fetchAddReviewRequest = review => {
+let count = 1;
+
+export const fetchAddReviewRequest = (token, review) => {
+	///// set Bearer in headers
 	return new Promise(res =>
 		setTimeout(() => {
 			console.log("check");
-			res({ review });
+			if (count !== 2) {
+				res({ review, error: "token expired", message: "success" });
+				return count++;
+			}
+
+			res({ review, error: null, message: "success" });
 		}, 100)
 	);
 };

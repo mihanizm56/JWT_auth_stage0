@@ -8,6 +8,8 @@ import {
 	SET_SUCCESS_SENDING_STATE_DONE,
 	RESET_SUCCESS_SENDING_STATE_DONE,
 	SET_REVIEWS,
+	RESET_ERROR,
+	REVIEWS_ERROR,
 } from "./constants";
 
 import { errors } from "../../../constants";
@@ -38,8 +40,10 @@ const reviewsStorage = (state = initialState, action) => {
 		// 	return { ...state, sendingIsSuccess: true };
 		case SET_REVIEWS:
 			return { ...state, reviewList: action.payload };
-		// case NETWORK_ERROR:
-		// 	return { ...state, error: errors.NETWORK_ERROR };
+		case REVIEWS_ERROR:
+			return { ...state, error: true };
+		case RESET_ERROR:
+			return { ...state, error: null };
 
 		default:
 			return state;
