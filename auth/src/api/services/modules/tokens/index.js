@@ -44,9 +44,10 @@ module.exports.createTokenPair = userLogin => {
 		algorithm: "RS256",
 	});
 	const refresh_token = jwt.sign({ user: userLogin }, jwt_secret_key);
+	const dateToExpire = new Date().getTime() + timeAccessTokenToExpireSeconds * 1000;
 
 	console.log("tokens were created");
-	return { access_token, refresh_token };
+	return { access_token, refresh_token, expiresIn: dateToExpire };
 };
 
 // func to get the public rsa256 key

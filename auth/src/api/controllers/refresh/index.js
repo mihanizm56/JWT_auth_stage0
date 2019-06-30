@@ -17,7 +17,7 @@ module.exports.refreshController = (req, res) => {
 			}
 
 			if (!data && req.token) {
-				const { access_token, refresh_token } = createTokenPair(userData.login);
+				const { access_token, refresh_token, expiresIn } = createTokenPair(userData.login);
 
 				saveExpiredToken(req.token).save((error, data) => {
 					if (error) {
@@ -26,7 +26,7 @@ module.exports.refreshController = (req, res) => {
 					}
 
 					console.log("refresh_token is valid, tokens were sent ", userData);
-					res.status(200).send({ access_token, refresh_token });
+					res.status(200).send({ access_token, refresh_token, expiresIn });
 				});
 
 				return;

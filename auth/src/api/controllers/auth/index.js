@@ -22,10 +22,10 @@ module.exports.authController = (req, res) => {
 			const verifyPassword = compareHashedPasswords(hashedRequestPassword, data.password);
 
 			if (verifyPassword) {
-				const { access_token, refresh_token } = createTokenPair(userData.login);
+				const { access_token, refresh_token, expiresIn } = createTokenPair(userData.login);
 				console.log("user is valid, tokens were sent ", userData);
 
-				return res.status(200).send({ access_token, refresh_token });
+				return res.status(200).send({ access_token, refresh_token, expiresIn });
 			}
 
 			console.log("user is not authorized");
