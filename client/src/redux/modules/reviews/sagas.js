@@ -84,10 +84,11 @@ export function* fetchAddReviewSaga(action) {
 	if (error === "token expired") {
 		yield put(refreshTokenAction());
 		yield fetchAddReviewSaga(action);
-	} else if (review) {
+	} else if (review && !error) {
 		yield put(putReviewAction(review));
 		yield put(push("/reviews"));
 	} else {
+		console.log("get error in fetchAddReviewSaga", error);
 		yield put(reviewsErrorAction());
 	}
 }

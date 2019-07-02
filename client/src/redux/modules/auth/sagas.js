@@ -17,13 +17,14 @@ export function* authSaga(action) {
 		try {
 			const resultOfRequest = yield call(fetchAuthRequest, login, password);
 			console.log("check resultOfRequest", resultOfRequest);
-			const { data: { access_token, refresh_token, expiredIn } = {} } = resultOfRequest;
+			const { data: { access_token, refresh_token, expiresIn } = {}, error } = resultOfRequest;
 
-			if (access_token && refresh_token && expiredIn) {
+			if (access_token && refresh_token && expiresIn && !error) {
 				yield put(loginSuccessAction());
 				saveUser(login);
-				saveTokens(access_token, refresh_token, expiredIn);
+				saveTokens(access_token, refresh_token, expiresIn);
 			} else {
+				alert("error", error); /////TODO remove and make good enough error description
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
 			}
@@ -39,18 +40,21 @@ export function* loginSaga(action) {
 
 	if (login && password && user) {
 		try {
-			const resultOfRequest = yield call(fetchLoginRequest, login, password);
-			const { data: { access_token, refresh_token, expiredIn } = {} } = resultOfRequest;
+			const resultOfRequest = yield call(fetchLoginRequest, login, password, user);
+			const { data: { access_token, refresh_token, expiresIn } = {}, error } = resultOfRequest;
+			console.log("check fetchLoginRequest", resultOfRequest);
 
-			if (access_token && refresh_token && expiredIn) {
+			if (access_token && refresh_token && expiresIn && !error) {
 				yield put(loginSuccessAction());
 				saveUser(login);
-				saveTokens(access_token, refresh_token, expiredIn);
-			} else {
+				saveTokens(access_token, refresh_token, expiresIn);
+			} else if (error) {
+				alert("error", error); /////TODO remove and make good enough error description
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
 			}
 		} catch (error) {
+			console.log("!!!!!!!!!!!!!!!!!!!!!!!1", error);
 			yield put(loginFailedAction());
 			yield call(logoutSaga);
 		}
@@ -64,12 +68,13 @@ export function* refreshSaga(actions) {
 	if (refreshToken) {
 		try {
 			const resultOfRequest = yield call(fetchRefreshRequest, refreshToken);
-			const { data: { access_token, refresh_token, expiredIn } = {} } = resultOfRequest;
+			const { data: { access_token, refresh_token, expiresIn } = {}, error } = resultOfRequest;
 
-			if (access_token && refresh_token && expiredIn) {
+			if (access_token && refresh_token && expiresIn) {
 				console.log("tokens saved && refreshed");
-				saveTokens(access_token, refresh_token, expiredIn);
+				saveTokens(access_token, refresh_token, expiresIn);
 			} else {
+				alert("error", error); /////TODO remove and make good enough error description
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
 			}

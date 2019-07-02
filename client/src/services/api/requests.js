@@ -1,4 +1,5 @@
-// import { getRequest, postRequest, deleteRequest } from "./rest";
+import { getRequest, postRequest, deleteRequest } from "./rest";
+import { HOST_AUTH } from "../../constants";
 
 //// TODO: remove when real api
 const testReviews = [
@@ -17,41 +18,43 @@ const testReviews = [
 export const fetchLoginRequest = (login, password, user) => {
 	console.log("запрос на создание пользователя", login, password, user);
 
-	return new Promise((resolve, reject) =>
-		setTimeout(() => {
-			console.log("check fetchLoginRequest");
-			resolve({
-				data: {
-					access_token: "test_token",
-					refresh_token: "test_refresh_token",
-					expiredIn: new Date().getTime + 20000,
-				},
-				message: "success",
-				error: null,
-			});
-			// reject({ error: "test-error" });
-		}, 100)
-	);
+	return postRequest({ endpoint: `${HOST_AUTH}/login`, data: { login, password, user } });
+	// return new Promise((resolve, reject) =>
+	// 	setTimeout(() => {
+	// 		console.log("check fetchLoginRequest");
+	// 		resolve({
+	// 			data: {
+	// 				access_token: "test_token",
+	// 				refresh_token: "test_refresh_token",
+	// 				expiresIn: new Date().getTime() + 200000,
+	// 			},
+	// 			message: "success",
+	// 			error: null,
+	// 		});
+	// 		// reject({ error: "test-error" });
+	// 	}, 100)
+	// );
 };
 
 export const fetchAuthRequest = (login, password) => {
 	console.log("запрос на получение доступа уже существующему пользователю", login, password);
 
-	return new Promise((resolve, reject) =>
-		setTimeout(() => {
-			console.log("check fetchAuthRequest");
-			resolve({
-				data: {
-					access_token: "test_token",
-					refresh_token: "test_refresh_token",
-					expiredIn: new Date().getTime + 20000,
-				},
-				message: "success",
-				error: null,
-			});
-			// reject({ error: "test-error" });
-		}, 100)
-	);
+	return postRequest({ endpoint: `${HOST_AUTH}/authentificate`, data: { login, password } });
+	// return new Promise((resolve, reject) =>
+	// 	setTimeout(() => {
+	// 		console.log("check fetchAuthRequest");
+	// 		resolve({
+	// 			data: {
+	// 				access_token: "test_token",
+	// 				refresh_token: "test_refresh_token",
+	// 				expiresIn: new Date().getTime() + 200000,
+	// 			},
+	// 			message: "success",
+	// 			error: null,
+	// 		});
+	// 		// reject({ error: "test-error" });
+	// 	}, 100)
+	// );
 };
 
 export const fetchRefreshRequest = refresh_token => {
@@ -63,7 +66,7 @@ export const fetchRefreshRequest = refresh_token => {
 				data: {
 					access_token: "test_token_if_refresh",
 					refresh_token: "test_refresh_token_refreshed",
-					expiredIn: new Date().getTime + 20000,
+					expiresIn: new Date().getTime() + 200000,
 				},
 				message: "success",
 				error: null,
@@ -82,17 +85,11 @@ export const fetchReviewsRequest = (ms, data) => {
 	);
 };
 
-let count = 1;
-
 export const fetchAddReviewRequest = (token, review) => {
 	///// set Bearer in headers
 	return new Promise(res =>
 		setTimeout(() => {
 			console.log("check");
-			if (count !== 2) {
-				res({ review, error: "token expired", message: "success" });
-				return count++;
-			}
 
 			res({ review, error: null, message: "success" });
 		}, 100)

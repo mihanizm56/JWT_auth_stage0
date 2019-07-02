@@ -4,17 +4,19 @@ const { createTokenPair } = require("../../services/modules/tokens");
 
 module.exports.authController = (req, res) => {
 	const userData = req.body;
-	const { user, password, login } = userData;
+	console.log("check data of user", userData);
 
-	if (!login || !password || !user) {
+	const { password, login } = userData;
+
+	if (!login || !password) {
 		console.log("not full user data");
-		return res.status(403).send({ error: { message: "enter the correct user data" } });
+		return res.status(403).send({ error: "enter the correct user data", data: {} });
 	}
 
 	userCollection(login).exec((error, data) => {
 		if (error) {
 			console.log("check err", error);
-			return res.status(500).json({ error: "internal db error" });
+			return res.status(500).json({ error: "internal db error", data: {} });
 		}
 
 		if (data) {
@@ -25,13 +27,13 @@ module.exports.authController = (req, res) => {
 				const { access_token, refresh_token, expiresIn } = createTokenPair(userData.login);
 				console.log("user is valid, tokens were sent ", userData);
 
-				return res.status(200).send({ access_token, refresh_token, expiresIn });
+				return res.status(200).send({ data: { access_token, refresh_token, expiresIn }, error: null });
 			}
 
 			console.log("user is not authorized");
-			return res.status(401).send({ error: { message: "unauthorized" } });
+			return res.status(401).send({ error: "Не авторизованы", data: {} });
 		}
 
-		return res.status(401).send({ error: { message: "there is no user in db" } });
+		return res.status(400).send({ error: "Введите корректные данные", data: {} });
 	});
 };

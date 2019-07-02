@@ -6,16 +6,16 @@ module.exports.getAllReviewsController = (req, res) => {
 	getAllReviews().exec((error, data) => {
 		if (error) {
 			console.log("get an error ", error);
-			return res.status(400).send({ error: { message: "bad request" } });
+			return res.status(400).send({ error: "Введите коррекные данные", data: {} });
 		}
 
 		if (!data) {
 			console.log("no reviews");
-			return res.status(404).send({ error: { message: "no data" } });
+			return res.status(400).send({ error: "Нет данных", data: {} });
 		}
 
 		console.log("reviews were sent");
-		return res.status(200).json({ data });
+		return res.status(200).json({ data, error: null });
 	});
 };
 
@@ -25,26 +25,25 @@ module.exports.reviewsCreateController = (req, res) => {
 
 	getPublicKey()
 		.then(secret => {
-			console.log("get secret", secret);
 			jwt.verify(req.token, secret, { algorithms: ["RS256"] }, (error, authData) => {
 				if (error) {
 					console.log("get an error ", error);
 
 					if (error.name === "TokenExpiredError") {
-						return res.status(403).send({ error: { message: "token expired" } });
+						return res.status(403).send({ error: "token expired", data: {} });
 					}
 
-					return res.status(403).send({ error: { message: "bad request", error } });
+					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
 				}
 
 				if (!authData) {
 					console.log("reviewsCreateController gets no authData ", newReview);
-					return res.status(400).send({ error: { message: "bad request" } });
+					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
 				}
 
 				if (!review || !login || !user) {
 					console.log("not valid request");
-					return res.status(400).send({ error: { message: "bad request" } });
+					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
 				}
 
 				addToReviews({ ...newReview }).save((error, data) => {
@@ -52,29 +51,29 @@ module.exports.reviewsCreateController = (req, res) => {
 						console.log("get an error ", error);
 
 						if (error.code === 11000) {
-							return res.status(403).send({ error: { message: "not a unique review" } });
+							return res.status(403).send({ error: "Отзыв существует", data: {} });
 						}
 
-						return res.status(400).send({ error: { message: "bad request" } });
+						return res.status(400).send({ error: "Введите коррекные данные", data: {} });
 					}
 
 					if (!data) {
 						console.log("no reviews");
-						return res.status(404).send({ error: { message: "no data" } });
+						return res.status(400).send({ error: "Нет данных", data: {} });
 					}
 
 					const { user, login, review } = data;
 
 					if (user && login && review) {
 						console.log("the new review was added");
-						return res.status(200).json({ user, login, review });
+						return res.status(200).json({ data: { user, login, review }, error: null });
 					}
 
-					return res.status(400).send({ error: { message: "bad request" } });
+					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
 				});
 			});
 		})
-		.catch(error => res.status(500).send({ error: { message: "internal server error" } }));
+		.catch(error => res.status(500).send({ error: "internal server error", data: {} }));
 };
 
 module.exports.reviewsDeleteController = (req, res) => {

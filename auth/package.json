@@ -13,7 +13,7 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "nodemon ./src",
+    "start": "node ./src",
     "lint": "eslint src/",
     "stop": "taskkill /F /IM node.exe"
   },

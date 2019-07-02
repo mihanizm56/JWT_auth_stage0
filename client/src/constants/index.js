@@ -17,3 +17,7 @@ export const SET_SENDING_STATE_DONE = "SET_SENDING_STATE_DONE";
 export const SET_SUCCESS_SENDING_STATE_DONE = "SET_SUCCESS_SENDING_STATE_DONE";
 export const RESET_SUCCESS_SENDING_STATE_DONE = "RESET_SUCCESS_SENDING_STATE_DONE";
 export const ERROR = "ERROR";
+
+//// api constants
+export const HOST_API = "http://localhost:8081/api";
+export const HOST_AUTH = "http://localhost:8080/auth";

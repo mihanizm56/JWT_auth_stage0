@@ -29,7 +29,7 @@ export const LoginForm = props => {
 					/>
 				</div>
 				<div className="form__button">
-					<Button type="submit">Войти</Button>
+					<Button type="submit">Создать и войти</Button>
 				</div>
 				<div className="form__button form__button--auth">
 					<Button component={NavLink} to="/auth" style={{ fontSize: "10px" }}>

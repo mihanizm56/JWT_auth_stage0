@@ -28,7 +28,7 @@ module.exports.tokenVerify = (req, res, next) => {
 
 	if (!tokenHeader) {
 		console.log("get no token");
-		return res.status(401).send({ error: { message: "did not get any token" } });
+		return res.status(400).send({ error: { message: "did not get any token" } });
 	} else {
 		const pureToken = tokenHeader.split(" ")[1];
 
