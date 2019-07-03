@@ -1,5 +1,5 @@
-import { getRequest, postRequest, deleteRequest } from "./rest";
-import { HOST_AUTH } from "../../constants";
+import { getRequest, postRequest, deleteRequest, postRequestWithJWT } from "./rest";
+import { HOST_AUTH, HOST_API } from "../../constants";
 
 //// TODO: remove when real api
 const testReviews = [
@@ -60,40 +60,42 @@ export const fetchAuthRequest = (login, password) => {
 export const fetchRefreshRequest = refresh_token => {
 	console.log("запрос на обновление токена");
 
-	return new Promise((resolve, reject) =>
-		setTimeout(() => {
-			resolve({
-				data: {
-					access_token: "test_token_if_refresh",
-					refresh_token: "test_refresh_token_refreshed",
-					expiresIn: new Date().getTime() + 200000,
-				},
-				message: "success",
-				error: null,
-			});
-			// reject({ error: "test-error" });
-		}, 100)
-	);
+	return postRequestWithJWT({ endpoint: `${HOST_AUTH}/refresh`, token: refresh_token });
+	// return new Promise((resolve, reject) =>
+	// 	setTimeout(() => {
+	// 		resolve({
+	// 			data: {
+	// 				access_token: "test_token_if_refresh",
+	// 				refresh_token: "test_refresh_token_refreshed",
+	// 				expiresIn: new Date().getTime() + 200000,
+	// 			},
+	// 			message: "success",
+	// 			error: null,
+	// 		});
+	// 		// reject({ error: "test-error" });
+	// 	}, 100)
+	// );
 };
 
-export const fetchReviewsRequest = (ms, data) => {
-	return new Promise(res =>
-		setTimeout(() => {
-			console.log("check");
-			res({ data: { reviews: testReviews } });
-		}, 100)
-	);
+export const fetchReviewsRequest = () => {
+	return getRequest({ endpoint: `${HOST_API}/reviews` });
+	// return new Promise(res =>
+	// 	setTimeout(() => {
+	// 		console.log("check");
+	// 		res({ data: { reviews: testReviews } });
+	// 	}, 100)
+	// );
 };
 
-export const fetchAddReviewRequest = (token, review) => {
-	///// set Bearer in headers
-	return new Promise(res =>
-		setTimeout(() => {
-			console.log("check");
+export const fetchAddReviewRequest = (access_token, review) => {
+	return postRequestWithJWT({ endpoint: `${HOST_API}/reviews`, token: access_token, data: review });
+	// return new Promise(res =>
+	// 	setTimeout(() => {
+	// 		console.log("check");
 
-			res({ review, error: null, message: "success" });
-		}, 100)
-	);
+	// 		res({ review, error: null, message: "success" });
+	// 	}, 100)
+	// );
 };
 
 export const fetchDeleteReviewRequest = (ms, data) => {

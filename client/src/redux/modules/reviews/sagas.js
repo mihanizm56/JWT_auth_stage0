@@ -64,31 +64,39 @@ import { getReviewsAction, reviewsErrorAction, putReviewAction } from "./actions
 import { refreshTokenAction } from "../shared/actions";
 
 export function* fetchReviewsSaga(action) {
-	const resultOfRequest = yield call(fetchReviewsRequest);
-	const { data: { reviews } = {} } = resultOfRequest;
+	try {
+		const resultOfRequest = yield call(fetchReviewsRequest);
+		console.log("fetchReviewsRequest result ", resultOfRequest);
+		const { data } = resultOfRequest;
 
-	if (reviews) {
-		yield put(getReviewsAction(reviews));
-	} else {
+		if (data) {
+			yield put(getReviewsAction(data));
+		}
+	} catch (error) {
+		alert("error", error); /////TODO remove and make good enough error description
 		yield put(reviewsErrorAction());
 	}
-	console.log("request for reviews", resultOfRequest);
 }
 
 export function* fetchAddReviewSaga(action) {
 	const { accessToken } = localStorage;
-	const resultOfRequest = yield call(fetchAddReviewRequest, accessToken, action.payload);
-	console.log("resultOfRequest", resultOfRequest);
-	const { review, error } = resultOfRequest;
+	try {
+		const resultOfRequest = yield call(fetchAddReviewRequest, accessToken, action.payload);
+		console.log("resultOfRequest", resultOfRequest);
+		const { data, error } = resultOfRequest;
 
-	if (error === "token expired") {
-		yield put(refreshTokenAction());
-		yield fetchAddReviewSaga(action);
-	} else if (review && !error) {
-		yield put(putReviewAction(review));
-		yield put(push("/reviews"));
-	} else {
-		console.log("get error in fetchAddReviewSaga", error);
+		if (data && !error) {
+			yield put(putReviewAction(data));
+			yield put(push("/reviews"));
+		} else if (error === "token expired") {
+			yield put(refreshTokenAction());
+			yield fetchAddReviewSaga(action);
+		} else if (error) {
+			alert("error", error); /////TODO remove and make good enough error description
+			yield put(reviewsErrorAction());
+		}
+	} catch (error) {
+		alert("error", error); /////TODO remove and make good enough error description
 		yield put(reviewsErrorAction());
 	}
 }

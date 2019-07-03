@@ -50,7 +50,7 @@ export class ListReviewsBox extends PureComponent {
 		const { fullUrl } = this.props;
 		const { reviews, indexOfReview } = this.state;
 		const activeReview = reviews[indexOfReview] || {};
-		const { review = "default review", user = "default user", login = "default login" } = activeReview;
+		const { review = "empty review", user = "empty user", login = "empty login" } = activeReview;
 
 		return (
 			<ReviewBox
