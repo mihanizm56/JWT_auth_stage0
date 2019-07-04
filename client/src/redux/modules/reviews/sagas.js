@@ -14,9 +14,9 @@
 
 // const DEFAULT_REVIEWS = [
 //     {
-//         text: 'Нет данных',
-//         user: 'Нет данных',
-//         login: 'Нет данных'
+//         text: 'no data',
+//         user: 'no data',
+//         login: 'no data'
 //     }
 // ];
 
@@ -92,13 +92,30 @@ export function* fetchAddReviewSaga(action) {
 		} else if (error === "token expired" && accessToken && refresh_token) {
 			yield put(refreshTokenAction());
 			yield fetchAddReviewSaga(action);
-		} else if (error) {
-			//alert("error", error); /////TODO remove and make good enough error description
-			yield put(stopSubmit("review-form", { login: "test error" }));
+		} else if (error === "review exists") {
+			yield put(
+				stopSubmit("review-form", {
+					login: "The same review exists",
+					user: "The same review exists",
+				})
+			);
+			yield put(reviewsErrorAction());
+		} else if (error === "enter the correct data") {
+			yield put(
+				stopSubmit("review-form", {
+					login: "Please, enter the correct login",
+					user: "Please, enter the correct user",
+				})
+			);
 			yield put(reviewsErrorAction());
 		}
 	} catch (error) {
-		alert("error", error); /////TODO remove and make good enough error description
+		yield put(
+			stopSubmit("review-form", {
+				login: "network error, please retry",
+				user: "network error, please retry",
+			})
+		);
 		yield put(reviewsErrorAction());
 	}
 }

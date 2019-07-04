@@ -25,12 +25,12 @@ export function* authSaga(action) {
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
 			} else {
-				alert("error", error); /////TODO remove and make good enough error description
+				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
 			}
 		} catch (error) {
-			yield put(stopSubmit("auth", { login: "test error" }));
+			yield put(stopSubmit("auth", { login: "network error, please retry", password: "network error, please retry" }));
 			yield put(loginFailedAction());
 			yield call(logoutSaga);
 		}
