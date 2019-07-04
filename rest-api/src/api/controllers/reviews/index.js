@@ -6,12 +6,12 @@ module.exports.getAllReviewsController = (req, res) => {
 	getAllReviews().exec((error, data) => {
 		if (error) {
 			console.log("get an error ", error);
-			return res.status(400).send({ error: "Введите коррекные данные", data: {} });
+			return res.status(400).send({ error: "enter the correct data", data: {} });
 		}
 
 		if (!data) {
 			console.log("no reviews");
-			return res.status(400).send({ error: "Нет данных", data: {} });
+			return res.status(400).send({ error: "no data", data: {} });
 		}
 
 		console.log("reviews were sent");
@@ -36,23 +36,23 @@ module.exports.reviewsCreateController = (req, res) => {
 						return res.status(403).send({ error: "token expired", data: {} });
 					}
 
-					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
+					return res.status(400).send({ error: "enter the correct data", data: {} });
 				}
 
 				if (!authData) {
 					console.log("reviewsCreateController gets no authData ", newReview);
-					return res.status(400).send({ error: "Введите коррекный токен", data: {} });
+					return res.status(400).send({ error: "enter the correct token", data: {} });
 				}
 
 				if (!review || !login || !user) {
 					console.log("not valid request");
-					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
+					return res.status(400).send({ error: "enter the correct data", data: {} });
 				}
 
 				if (authData) {
 					const validUserLogin = authData.user;
 					if (validUserLogin !== login) {
-						return res.status(403).send({ error: "Не достаточно прав доступа", data: {} });
+						return res.status(403).send({ error: "not enough roots", data: {} });
 					}
 				}
 
@@ -61,15 +61,15 @@ module.exports.reviewsCreateController = (req, res) => {
 						console.log("get an error ", error);
 
 						if (error.code === 11000) {
-							return res.status(403).send({ error: "Отзыв существует", data: {} });
+							return res.status(403).send({ error: "review exists", data: {} });
 						}
 
-						return res.status(400).send({ error: "Введите коррекные данные", data: {} });
+						return res.status(400).send({ error: "enter the correct data", data: {} });
 					}
 
 					if (!data) {
 						console.log("no reviews");
-						return res.status(400).send({ error: "Нет данных", data: {} });
+						return res.status(400).send({ error: "no data", data: {} });
 					}
 
 					const { user, login, review } = data;
@@ -79,7 +79,7 @@ module.exports.reviewsCreateController = (req, res) => {
 						return res.status(200).json({ data: { user, login, review }, error: null });
 					}
 
-					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
+					return res.status(400).send({ error: "enter the correct data", data: {} });
 				});
 			});
 		})

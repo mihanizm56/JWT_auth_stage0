@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, fork } from "redux-saga/effects";
 import { stopSubmit } from "redux-form";
 import { loginSuccessAction, loginFailedAction } from "./actions";
 import {
@@ -27,12 +27,10 @@ export function* authSaga(action) {
 			} else {
 				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
 				yield put(loginFailedAction());
-				yield call(logoutSaga);
 			}
 		} catch (error) {
 			yield put(stopSubmit("auth", { login: "network error, please retry", password: "network error, please retry" }));
 			yield put(loginFailedAction());
-			yield call(logoutSaga);
 		}
 	}
 }
@@ -53,12 +51,9 @@ export function* loginSaga(action) {
 			} else if (error) {
 				alert("error", error); /////TODO remove and make good enough error description
 				yield put(loginFailedAction());
-				yield call(logoutSaga);
 			}
 		} catch (error) {
-			console.log("!!!!!!!!!!!!!!!!!!!!!!!1", error);
 			yield put(loginFailedAction());
-			yield call(logoutSaga);
 		}
 	}
 }
