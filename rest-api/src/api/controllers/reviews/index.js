@@ -21,11 +21,14 @@ module.exports.getAllReviewsController = (req, res) => {
 
 module.exports.reviewsCreateController = (req, res) => {
 	const newReview = req.body;
+	console.log("newReview ", newReview);
 	const { review, login, user } = newReview;
 
 	getPublicKey()
 		.then(secret => {
 			jwt.verify(req.token, secret, { algorithms: ["RS256"] }, (error, authData) => {
+				console.log("authData", authData);
+
 				if (error) {
 					console.log("get an error ", error);
 
@@ -38,12 +41,19 @@ module.exports.reviewsCreateController = (req, res) => {
 
 				if (!authData) {
 					console.log("reviewsCreateController gets no authData ", newReview);
-					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
+					return res.status(400).send({ error: "Введите коррекный токен", data: {} });
 				}
 
 				if (!review || !login || !user) {
 					console.log("not valid request");
 					return res.status(400).send({ error: "Введите коррекные данные", data: {} });
+				}
+
+				if (authData) {
+					const validUserLogin = authData.user;
+					if (validUserLogin !== login) {
+						return res.status(403).send({ error: "Не достаточно прав доступа", data: {} });
+					}
 				}
 
 				addToReviews({ ...newReview }).save((error, data) => {
@@ -78,6 +88,7 @@ module.exports.reviewsCreateController = (req, res) => {
 
 module.exports.reviewsDeleteController = (req, res) => {
 	const reviewToDelete = req.body;
+	console.log("reviewToDelete ", reviewToDelete);
 	const { review, login, user } = reviewToDelete;
 
 	getPublicKey()

@@ -40,7 +40,7 @@ const connectDB = () => {
 	mongoose.connect(process.env.DB_URL, options);
 	mongoose.set("useCreateIndex", true);
 
-	console.log("connected to db");
+	console.log("connected to auth db");
 
 	return mongoose.connection;
 };
