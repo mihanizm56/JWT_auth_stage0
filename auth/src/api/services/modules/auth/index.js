@@ -1,8 +1,6 @@
-const randomId = require("uuid");
 const mongoose = require("mongoose");
 const { User } = require("../../../models/users");
-const { makeHashedPassword } = require("../passwords");
-const { compareHashedPasswords } = require("../passwords");
+const { makeHashedPassword, compareHashedPasswords } = require("../passwords");
 
 module.exports.addUserInDb = userData => {
 	const User = mongoose.model("User");
