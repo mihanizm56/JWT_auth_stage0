@@ -59,7 +59,7 @@
 
 import { call, put } from "redux-saga/effects";
 import { push } from "connected-react-router";
-import { setSubmitFailed } from "redux-form";
+import { stopSubmit } from "redux-form";
 import { fetchReviewsRequest, fetchAddReviewRequest, fetchRefreshRequest } from "../../../services/api";
 import { getReviewsAction, reviewsErrorAction, putReviewAction } from "./actions";
 import { refreshTokenAction } from "../shared/actions";
@@ -94,7 +94,7 @@ export function* fetchAddReviewSaga(action) {
 			yield fetchAddReviewSaga(action);
 		} else if (error) {
 			//alert("error", error); /////TODO remove and make good enough error description
-			// yield put(setSubmitFailed("review-form", { login: "test error" }));
+			yield put(stopSubmit("review-form", { login: "test error" }));
 			yield put(reviewsErrorAction());
 		}
 	} catch (error) {

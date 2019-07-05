@@ -1,4 +1,5 @@
 import { call, put } from "redux-saga/effects";
+import { stopSubmit } from "redux-form";
 import { loginSuccessAction, loginFailedAction } from "./actions";
 import {
 	fetchLoginRequest,
@@ -29,6 +30,7 @@ export function* authSaga(action) {
 				yield call(logoutSaga);
 			}
 		} catch (error) {
+			yield put(stopSubmit("auth", { login: "test error" }));
 			yield put(loginFailedAction());
 			yield call(logoutSaga);
 		}
