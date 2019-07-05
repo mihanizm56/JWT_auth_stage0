@@ -24,13 +24,18 @@ export function* authSaga(action) {
 				yield put(loginSuccessAction());
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
-			} else {
-				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
-				yield put(loginFailedAction());
+			} else if (error) {
+				yield fork(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
+				yield fork(loginFailedAction());
 			}
 		} catch (error) {
-			yield put(stopSubmit("auth", { login: "network error, please retry", password: "network error, please retry" }));
-			yield put(loginFailedAction());
+			yield fork(
+				stopSubmit("auth", {
+					login: "network error, please retry",
+					user: "network error, please retry",
+				})
+			);
+			yield fork(loginFailedAction());
 		}
 	}
 }
@@ -49,11 +54,23 @@ export function* loginSaga(action) {
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
 			} else if (error) {
-				alert("error", error); /////TODO remove and make good enough error description
-				yield put(loginFailedAction());
+				yield fork(
+					stopSubmit("login", {
+						login: "enter correct user data",
+						user: "enter correct user data",
+						password: "enter correct user data",
+					})
+				);
+				yield fork(loginFailedAction());
 			}
 		} catch (error) {
-			yield put(loginFailedAction());
+			yield fork(
+				stopSubmit("login", {
+					login: "network error, please retry",
+					user: "network error, please retry",
+				})
+			);
+			yield fork(loginFailedAction());
 		}
 	}
 }
@@ -71,7 +88,7 @@ export function* refreshSaga(actions) {
 				console.log("tokens saved && refreshed");
 				saveTokens(access_token, refresh_token, expiresIn);
 			} else {
-				alert("error", error); /////TODO remove and make good enough error description
+				alert("error in refreshSaga"); /////TODO remove and make good enough error description
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
 			}

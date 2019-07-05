@@ -31,7 +31,7 @@ module.exports.authController = (req, res) => {
 			}
 
 			console.log("user is not authorized");
-			return res.status(401).send({ error: "Не авторизованы", data: {} });
+			return res.status(401).send({ error: "not authorized", data: {} });
 		}
 
 		return res.status(400).send({ error: "Введите корректные данные", data: {} });
