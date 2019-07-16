@@ -5,6 +5,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const server = require("http").createServer(app);
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
@@ -14,9 +15,6 @@ require("./api/services/modules/db");
 // add the main router
 const authRouter = require("./api/routes");
 
-// define the server port
-const port = process.env.SERVER_PORT || 10000;
-
 // define the middlewares
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,10 +22,23 @@ app.use(bodyParser.json());
 app.use("/auth", authRouter);
 
 // func to start the server
-const startServer = () => {
-	app.listen(port);
-	console.log("auth app started on port", port);
-};
+// define the ports
+const port = process.env.PORT || 8080;
+const host = "0.0.0.0";
+// const mongooseUrl = process.env.DB_URL;
+const mongooseUrl = process.env.DB_URL_LOCAL;
+
+// func to start the server
+const startServer = serverPort =>
+	new Promise((resolve, reject) => {
+		try {
+			server.listen(serverPort, host, () => {
+				resolve(server);
+			});
+		} catch (error) {
+			reject(error);
+		}
+	});
 
 // func to start the db connection
 const connectDB = () => {
@@ -35,15 +46,22 @@ const connectDB = () => {
 
 	const options = {
 		useNewUrlParser: true,
+		useFindAndModify: false,
 	};
 
-	mongoose.connect(process.env.DB_URL, options);
+	mongoose.connect(mongooseUrl, options);
 	mongoose.set("useCreateIndex", true);
 
-	console.log("connected to auth db");
+	console.log("connected to mongo db");
 
 	return mongoose.connection;
 };
 
 // func to start the whole rest-api server
-connectDB().once("open", startServer);
+connectDB().once("open", () => {
+	startServer(port)
+		.then(server => {
+			console.log("app started on port", port);
+		})
+		.catch(error => console.log("error during server start", error));
+});

@@ -7,7 +7,7 @@
     "client": "cd client && npm start",
     "auth": "cd auth && npm start",
     "rest-api": "cd rest-api && npm start",
-    "start": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest-api\" \"npm run client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
     "server": "concurrently --kill-others-on-fail \"npm run auth\" \"npm run rest-api\"",
     "stop": "taskkill /F /IM node.exe",
     "install:main": "npm i",
