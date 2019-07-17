@@ -16,8 +16,10 @@ module.exports.refreshController = (req, res) => {
 				return res.status(500).send({ error: "Неверный запрос к существующим refresh токенам", data: {} });
 			}
 
-			if (!data && req.token) {
-				const { access_token, refresh_token, expiresIn } = createTokenPair(userData.login);
+			if (!data && req.token && userData.user) {
+				console.log("hunt for userData.login 2", userData);
+
+				const { access_token, refresh_token, expiresIn } = createTokenPair(userData.user);
 
 				saveExpiredToken(req.token).save((error, data) => {
 					if (error) {
@@ -29,6 +31,9 @@ module.exports.refreshController = (req, res) => {
 					res.status(200).send({ data: { access_token, refresh_token, expiresIn }, error: null });
 				});
 
+				return;
+			} else if (!userData.user) {
+				console.log("HUNTED");
 				return;
 			}
 

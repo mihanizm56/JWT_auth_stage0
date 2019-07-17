@@ -24,6 +24,7 @@ module.exports.authController = (req, res) => {
 			const verifyPassword = compareHashedPasswords(hashedRequestPassword, data.password);
 
 			if (verifyPassword) {
+				console.log("hunt for userData.login 1", userData.login);
 				const { access_token, refresh_token, expiresIn } = createTokenPair(userData.login);
 				console.log("user is valid, tokens were sent ", userData);
 

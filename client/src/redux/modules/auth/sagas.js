@@ -1,4 +1,4 @@
-import { call, put, fork } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 import { stopSubmit } from "redux-form";
 import { loginSuccessAction, loginFailedAction } from "./actions";
 import {
@@ -17,7 +17,7 @@ export function* authSaga(action) {
 	if (login && password) {
 		try {
 			const resultOfRequest = yield call(fetchAuthRequest, login, password);
-			console.log("check resultOfRequest", resultOfRequest);
+			console.log("check resultOfRequest authSaga", resultOfRequest);
 			const { data: { access_token, refresh_token, expiresIn } = {}, error } = resultOfRequest;
 
 			if (access_token && refresh_token && expiresIn && !error) {
@@ -25,17 +25,19 @@ export function* authSaga(action) {
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
 			} else if (error) {
-				yield fork(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
-				yield fork(loginFailedAction());
+				console.log("////////////");
+
+				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
+				yield put(loginFailedAction());
 			}
 		} catch (error) {
-			yield fork(
+			yield put(
 				stopSubmit("auth", {
 					login: "network error, please retry",
 					user: "network error, please retry",
 				})
 			);
-			yield fork(loginFailedAction());
+			yield put(loginFailedAction());
 		}
 	}
 }
@@ -47,35 +49,38 @@ export function* loginSaga(action) {
 		try {
 			const resultOfRequest = yield call(fetchLoginRequest, login, password, user);
 			const { data: { access_token, refresh_token, expiresIn } = {}, error } = resultOfRequest;
-			console.log("check fetchLoginRequest", resultOfRequest);
+			console.log("check fetchLoginRequest loginSaga", resultOfRequest);
 
 			if (access_token && refresh_token && expiresIn && !error) {
 				yield put(loginSuccessAction());
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
 			} else if (error) {
-				yield fork(
+				console.log("/////////////////");
+
+				yield put(
 					stopSubmit("login", {
 						login: "enter correct user data",
 						user: "enter correct user data",
 						password: "enter correct user data",
 					})
 				);
-				yield fork(loginFailedAction());
+				yield put(loginFailedAction());
 			}
 		} catch (error) {
-			yield fork(
+			console.log("!!!!!!!!!!!!!!!!!!");
+			yield put(
 				stopSubmit("login", {
 					login: "network error, please retry",
 					user: "network error, please retry",
 				})
 			);
-			yield fork(loginFailedAction());
+			yield put(loginFailedAction());
 		}
 	}
 }
 
-export function* refreshSaga(actions) {
+export function* refreshSaga() {
 	const { refreshToken } = localStorage;
 	console.log("refreshSaga goes");
 
@@ -84,11 +89,13 @@ export function* refreshSaga(actions) {
 			const resultOfRequest = yield call(fetchRefreshRequest, refreshToken);
 			const { data: { access_token, refresh_token, expiresIn } = {}, error } = resultOfRequest;
 
-			if (access_token && refresh_token && expiresIn) {
+			if (access_token && refresh_token && expiresIn && !error) {
 				console.log("tokens saved && refreshed");
-				saveTokens(access_token, refresh_token, expiresIn);
+				yield saveTokens(access_token, refresh_token, expiresIn);
 			} else {
-				alert("error in refreshSaga"); /////TODO remove and make good enough error description
+				console.log("error in refreshSaga");
+
+				// alert("error in refreshSaga"); /////TODO remove and make good enough error description
 				yield put(loginFailedAction());
 				yield call(logoutSaga);
 			}

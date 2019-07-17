@@ -27,7 +27,7 @@ module.exports.reviewsCreateController = (req, res) => {
 	getPublicKey()
 		.then(secret => {
 			jwt.verify(req.token, secret, { algorithms: ["RS256"] }, (error, authData) => {
-				console.log("authData", authData);
+				console.log("authData //////////////", authData);
 
 				if (error) {
 					console.log("get an error ", error);
@@ -50,6 +50,8 @@ module.exports.reviewsCreateController = (req, res) => {
 				}
 
 				if (authData) {
+					console.log("/////////////", authData, authData.user);
+
 					const validUserLogin = authData.user;
 					if (validUserLogin !== login) {
 						return res.status(403).send({ error: "not enough roots", data: {} });
@@ -83,7 +85,7 @@ module.exports.reviewsCreateController = (req, res) => {
 				});
 			});
 		})
-		.catch(error => res.status(500).send({ error: "internal server error", data: {} }));
+		.catch(error => console.log(error, error) || res.status(500).send({ error: "internal server error", data: {} }));
 };
 
 module.exports.reviewsDeleteController = (req, res) => {
@@ -131,5 +133,5 @@ module.exports.reviewsDeleteController = (req, res) => {
 				});
 			});
 		})
-		.catch(error => res.status(500).send({ error: { message: "internal server error" } }));
+		.catch(error => console.log(error, error) || res.status(500).send({ error: "internal server error" }));
 };

@@ -1,9 +1,10 @@
-import { call, put, fork } from "redux-saga/effects";
+import { call, put, putResolve } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { stopSubmit } from "redux-form";
 import { fetchReviewsRequest, fetchAddReviewRequest, fetchRefreshRequest } from "../../../services/api";
-import { getReviewsAction, reviewsErrorAction, putReviewAction } from "./actions";
+import { getReviewsAction, reviewsErrorAction, putReviewAction, addReviewAction } from "./actions";
 import { refreshTokenAction } from "../shared/actions";
+import { refreshSaga } from "../auth";
 
 export function* fetchReviewsSaga(action) {
 	try {
@@ -20,42 +21,55 @@ export function* fetchReviewsSaga(action) {
 }
 
 export function* fetchAddReviewSaga(action) {
-	const { accessToken, refresh_token } = localStorage;
-	try {
-		const resultOfRequest = yield call(fetchAddReviewRequest, accessToken, action.payload);
-		console.log("resultOfRequest", resultOfRequest);
-		const { data, error } = resultOfRequest;
+	console.log("start fetchAddReviewSaga");
+	const { accessToken, refreshToken } = localStorage;
+	if (accessToken && refreshToken) {
+		try {
+			const resultOfRequest = yield call(fetchAddReviewRequest, accessToken, action.payload);
+			const { data, error } = resultOfRequest;
 
-		if (data && !error) {
-			yield put(putReviewAction(data));
-			yield put(push("/reviews"));
-		} else if (error === "token expired" && accessToken && refresh_token) {
-			yield put(refreshTokenAction());
-			yield fetchAddReviewSaga(action);
-		} else if (error === "review exists") {
-			yield fork(
+			if (!error) {
+				console.log("0");
+				yield put(putReviewAction(data));
+				yield put(push("/reviews"));
+			} else if (error === "token expired") {
+				console.log("1");
+				try {
+					yield call(refreshSaga);
+					yield call(fetchAddReviewSaga, action);
+				} catch (error) {
+					alert("error in fetchAddReviewSaga");
+				}
+			} else if (error === "review exists") {
+				console.log("2");
+				yield put(
+					stopSubmit("review-form", {
+						login: "The same review exists",
+						user: "The same review exists",
+					})
+				);
+				yield put(reviewsErrorAction());
+			} else if (error === "enter the correct data") {
+				console.log("3");
+				yield put(
+					stopSubmit("review-form", {
+						login: "Please, enter the correct login",
+						user: "Please, enter the correct user",
+					})
+				);
+				yield put(reviewsErrorAction());
+			} else {
+				console.log("exception");
+			}
+		} catch (error) {
+			console.log("4");
+			yield put(
 				stopSubmit("review-form", {
-					login: "The same review exists",
-					user: "The same review exists",
+					login: "network error, please retry",
+					user: "network error, please retry",
 				})
 			);
-			yield fork(reviewsErrorAction());
-		} else if (error === "enter the correct data") {
-			yield fork(
-				stopSubmit("review-form", {
-					login: "Please, enter the correct login",
-					user: "Please, enter the correct user",
-				})
-			);
-			yield fork(reviewsErrorAction());
+			yield put(reviewsErrorAction());
 		}
-	} catch (error) {
-		yield fork(
-			stopSubmit("review-form", {
-				login: "network error, please retry",
-				user: "network error, please retry",
-			})
-		);
-		yield fork(reviewsErrorAction());
 	}
 }

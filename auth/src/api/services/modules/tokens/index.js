@@ -39,6 +39,7 @@ module.exports.tokenVerify = (req, res, next) => {
 
 // func to create the pair of tokens
 module.exports.createTokenPair = userLogin => {
+	console.log("createTokenPair !!!!!!", userLogin);
 	const access_token = jwt.sign({ user: userLogin }, jwt_secret_key, {
 		expiresIn: `${timeAccessTokenToExpireSeconds}s`,
 		algorithm: "RS256",

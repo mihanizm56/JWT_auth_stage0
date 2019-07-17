@@ -11,3 +11,5 @@ export const normalizeCardName = value =>
 		.replace(/^\s+/, "")
 		.replace(/^[а-яА-ЯёЁ0-9!@#$&*"'-=_+]+$/, "")
 		.toUpperCase();
+
+export const checkObjectIsEmpty = object => JSON.stringify(object).length < 3;
