@@ -24,8 +24,6 @@ module.exports.loginUserController = (req, res) => {
 			return res.status(500).send({ error: "internal db error", data: {} });
 		}
 
-		console.log("hunt for userData.login 2", login);
-
 		const { access_token, refresh_token, expiresIn } = createTokenPair(login);
 		console.log("user added ", newUser);
 

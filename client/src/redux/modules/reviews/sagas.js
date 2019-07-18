@@ -33,7 +33,6 @@ export function* fetchAddReviewSaga(action) {
 				yield put(putReviewAction(data));
 				yield put(push("/reviews"));
 			} else if (error === "token expired") {
-				console.log("1");
 				try {
 					yield call(refreshSaga);
 					yield call(fetchAddReviewSaga, action);
@@ -41,7 +40,6 @@ export function* fetchAddReviewSaga(action) {
 					alert("error in fetchAddReviewSaga");
 				}
 			} else if (error === "review exists") {
-				console.log("2");
 				yield put(
 					stopSubmit("review-form", {
 						login: "The same review exists",
@@ -50,7 +48,6 @@ export function* fetchAddReviewSaga(action) {
 				);
 				yield put(reviewsErrorAction());
 			} else if (error === "enter the correct data") {
-				console.log("3");
 				yield put(
 					stopSubmit("review-form", {
 						login: "Please, enter the correct login",
@@ -59,7 +56,7 @@ export function* fetchAddReviewSaga(action) {
 				);
 				yield put(reviewsErrorAction());
 			} else {
-				console.log("exception");
+				throw new Error("check exception in fetchAddReviewSaga");
 			}
 		} catch (error) {
 			console.log("4");

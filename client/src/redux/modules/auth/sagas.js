@@ -25,8 +25,6 @@ export function* authSaga(action) {
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
 			} else if (error) {
-				console.log("////////////");
-
 				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
 				yield put(loginFailedAction());
 			}
@@ -56,8 +54,6 @@ export function* loginSaga(action) {
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
 			} else if (error) {
-				console.log("/////////////////");
-
 				yield put(
 					stopSubmit("login", {
 						login: "enter correct user data",

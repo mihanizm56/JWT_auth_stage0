@@ -5,8 +5,6 @@ import "./VerdanaText.css";
 
 export const VerdanaText = (props: VerdanaTextProps): Node => {
 	const { text, inlineStyles, classname } = props;
-	console.log("/////", classname);
-
 	return (
 		<p
 			style={{ ...inlineStyles }}

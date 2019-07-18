@@ -11,7 +11,6 @@ export const ReviewsPage = props => {
 	} = props;
 	const modalIsOpened = modalOpen === "add";
 	console.log("props ReviewsPage", props.match);
-	console.log("/////////", modalOpen, modalIsOpened);
 	return (
 		<div className="layout-page">
 			<ReviewsStoreProvider>

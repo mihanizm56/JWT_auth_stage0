@@ -50,8 +50,6 @@ module.exports.reviewsCreateController = (req, res) => {
 				}
 
 				if (authData) {
-					console.log("/////////////", authData, authData.user);
-
 					const validUserLogin = authData.user;
 					if (validUserLogin !== login) {
 						return res.status(403).send({ error: "not enough roots", data: {} });

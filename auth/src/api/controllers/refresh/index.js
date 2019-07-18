@@ -17,8 +17,6 @@ module.exports.refreshController = (req, res) => {
 			}
 
 			if (!data && req.token && userData.user) {
-				console.log("hunt for userData.login 2", userData);
-
 				const { access_token, refresh_token, expiresIn } = createTokenPair(userData.user);
 
 				saveExpiredToken(req.token).save((error, data) => {
