@@ -30,6 +30,10 @@ module.exports.reviewsCreateController = (req, res) => {
 				if (error) {
 					console.log("get an error ", error);
 
+					if (error.message === "invalid signature") {
+						return res.status(401).send({ error: "invalid token", data: {} });
+					}
+
 					if (error.name === "TokenExpiredError") {
 						return res.status(401).send({ error: "token expired", data: {} });
 					}

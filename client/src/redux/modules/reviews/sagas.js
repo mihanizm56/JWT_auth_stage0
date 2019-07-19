@@ -38,7 +38,13 @@ export function* fetchAddReviewSaga(action) {
 				} catch (error) {
 					console.log("error in fetchAddReviewSaga, logout", error);
 					yield call(logoutSaga);
+					yield put(push("/auth"));
 				}
+			} else if (error === "invalid token") {
+				console.log("error in fetchAddReviewSaga, logout", error);
+				yield call(logoutSaga);
+				yield put(reviewsErrorAction());
+				yield put(push("/auth"));
 			} else if (error === "review exists") {
 				yield put(
 					stopSubmit("review-form", {
@@ -59,6 +65,7 @@ export function* fetchAddReviewSaga(action) {
 				console.log("error in token, logout", error);
 				yield call(logoutSaga);
 				yield put(reviewsErrorAction());
+				yield put(push("/auth"));
 			} else if (error === "not enough roots") {
 				yield put(
 					stopSubmit("review-form", {

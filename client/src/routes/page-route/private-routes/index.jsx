@@ -9,7 +9,7 @@ export const PrivateRoute = ({ loginState }) => {
 		<Switch>
 			<ReviewsPageRoute exact path="/reviews" />
 			<ReviewsPageRoute exact path="/reviews/:modalOpen" />
-			<Redirect to="/reviews" />
+			{/* <Redirect from="/" to="/auth" /> */}
 		</Switch>
 	);
 };
