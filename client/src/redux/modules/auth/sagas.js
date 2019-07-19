@@ -24,15 +24,24 @@ export function* authSaga(action) {
 				yield put(loginSuccessAction());
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
-			} else if (error) {
+			} else if (error === "enter the correct user data") {
+				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
+				yield put(loginFailedAction());
+			} else if (error === "internal db error") {
+				stopSubmit("auth", {
+					login: "network connection error, please retry",
+					user: "network connection error, please retry",
+				});
+				yield put(loginFailedAction());
+			} else if (error === "not authorized") {
 				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
 				yield put(loginFailedAction());
 			}
 		} catch (error) {
 			yield put(
 				stopSubmit("auth", {
-					login: "network error, please retry",
-					user: "network error, please retry",
+					login: "network connection error, please retry",
+					user: "network connection error, please retry",
 				})
 			);
 			yield put(loginFailedAction());
@@ -53,7 +62,25 @@ export function* loginSaga(action) {
 				yield put(loginSuccessAction());
 				saveUser(login);
 				saveTokens(access_token, refresh_token, expiresIn);
-			} else if (error) {
+			} else if (error === "user exists") {
+				yield put(
+					stopSubmit("login", {
+						login: "user exists",
+						user: "user exists",
+						password: "user exists",
+					})
+				);
+				yield put(loginFailedAction());
+			} else if (error === "internal db error") {
+				yield put(
+					stopSubmit("login", {
+						login: "network connection error, please retry",
+						user: "network connection error, please retry",
+						password: "network connection error, please retry",
+					})
+				);
+				yield put(loginFailedAction());
+			} else if (error === "enter the correct user data") {
 				yield put(
 					stopSubmit("login", {
 						login: "enter correct user data",
@@ -64,11 +91,13 @@ export function* loginSaga(action) {
 				yield put(loginFailedAction());
 			}
 		} catch (error) {
-			console.log("!!!!!!!!!!!!!!!!!!");
+			console.log("error in loginSaga", error);
+
 			yield put(
 				stopSubmit("login", {
-					login: "network error, please retry",
-					user: "network error, please retry",
+					login: "network connection error, please retry",
+					user: "network connection error, please retry",
+					password: "network connection error, please retry",
 				})
 			);
 			yield put(loginFailedAction());
@@ -88,12 +117,18 @@ export function* refreshSaga() {
 			if (access_token && refresh_token && expiresIn && !error) {
 				console.log("tokens saved && refreshed");
 				yield saveTokens(access_token, refresh_token, expiresIn);
-			} else {
-				console.log("error in refreshSaga");
-
-				// alert("error in refreshSaga"); /////TODO remove and make good enough error description
-				yield put(loginFailedAction());
+			} else if (error === "token not valid") {
+				console.log("error token not valid");
 				yield call(logoutSaga);
+				yield put(loginFailedAction());
+			} else if (error === "internal db error") {
+				console.log("error internal db error");
+				yield call(logoutSaga);
+				yield put(loginFailedAction());
+			} else if (error === "token was used") {
+				console.log("error internal db error");
+				yield call(logoutSaga);
+				yield put(loginFailedAction());
 			}
 		} catch (error) {
 			yield put(loginFailedAction());
