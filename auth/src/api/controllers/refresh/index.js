@@ -6,14 +6,14 @@ const jwt_secret_key = process.env.JWT_SECRET;
 module.exports.refreshController = (req, res) => {
 	jwt.verify(req.token, jwt_secret_key, (error, userData) => {
 		if (error || !userData) {
-			console.log("get an error ", error);
-			return res.status(400).send({ error: "Некорректные данные", data: {} });
+			console.log("token not valid", error);
+			return res.status(400).send({ error: "token not valid", data: {} });
 		}
 
 		checkUsedRefreshTokens(req.token).exec((error, data) => {
 			if (error) {
-				console.log("check err", error);
-				return res.status(500).send({ error: "Неверный запрос к существующим refresh токенам", data: {} });
+				console.log("not valid request for tokens", error);
+				return res.status(500).send({ error: "internal db error", data: {} });
 			}
 
 			if (!data && req.token && userData.user) {
@@ -21,8 +21,8 @@ module.exports.refreshController = (req, res) => {
 
 				saveExpiredToken(req.token).save((error, data) => {
 					if (error) {
-						console.log("check err", error);
-						return res.status(500).send({ error: "внутренняя ошибка бд", data: {} });
+						console.log("error in saveExpiredToken", error);
+						return res.status(500).send({ error: "internal db error", data: {} });
 					}
 
 					console.log("refresh_token is valid, tokens were sent ", userData);
@@ -30,13 +30,10 @@ module.exports.refreshController = (req, res) => {
 				});
 
 				return;
-			} else if (!userData.user) {
-				console.log("HUNTED");
-				return;
 			}
 
 			console.log("refresh token was used");
-			return res.status(403).send({ error: "refresh_token был использован", data: {} });
+			return res.status(401).send({ error: "token was used", data: {} });
 		});
 	});
 };

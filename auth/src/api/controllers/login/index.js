@@ -18,7 +18,7 @@ module.exports.loginUserController = (req, res) => {
 			console.log("USER SAVE ERROR", error);
 
 			if (error.code === 11000) {
-				return res.status(400).send({ error: "user is not new", data: {} });
+				return res.status(403).send({ error: "user exists", data: {} });
 			}
 
 			return res.status(500).send({ error: "internal db error", data: {} });

@@ -10,7 +10,7 @@ module.exports.authController = (req, res) => {
 
 	if (!login || !password) {
 		console.log("not full user data");
-		return res.status(403).send({ error: "enter the correct user data", data: {} });
+		return res.status(401).send({ error: "enter the correct user data", data: {} });
 	}
 
 	userCollection(login).exec((error, data) => {
@@ -34,6 +34,6 @@ module.exports.authController = (req, res) => {
 			return res.status(401).send({ error: "not authorized", data: {} });
 		}
 
-		return res.status(400).send({ error: "Введите корректные данные", data: {} });
+		return res.status(400).send({ error: "enter the correct user data", data: {} });
 	});
 };
