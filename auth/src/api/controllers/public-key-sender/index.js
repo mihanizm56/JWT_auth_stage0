@@ -8,6 +8,6 @@ module.exports.getPublicKeyController = (req, res) => {
 		res.status(200).send({ key: jwt_public_key });
 	} catch (error) {
 		console.log("error in getPublicKeyController", error);
-		res.status(500).send({ data: { key: jwt_public_key }, error: "internal db error" });
+		res.status(500).send({ data: { key: jwt_public_key }, error: "internal server error" });
 	}
 };

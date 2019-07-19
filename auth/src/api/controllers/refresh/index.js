@@ -13,7 +13,7 @@ module.exports.refreshController = (req, res) => {
 		checkUsedRefreshTokens(req.token).exec((error, data) => {
 			if (error) {
 				console.log("not valid request for tokens", error);
-				return res.status(500).send({ error: "internal db error", data: {} });
+				return res.status(500).send({ error: "internal server error", data: {} });
 			}
 
 			if (!data && req.token && userData.user) {
@@ -22,7 +22,7 @@ module.exports.refreshController = (req, res) => {
 				saveExpiredToken(req.token).save((error, data) => {
 					if (error) {
 						console.log("error in saveExpiredToken", error);
-						return res.status(500).send({ error: "internal db error", data: {} });
+						return res.status(500).send({ error: "internal server error", data: {} });
 					}
 
 					console.log("refresh_token is valid, tokens were sent ", userData);

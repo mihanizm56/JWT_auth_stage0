@@ -27,7 +27,7 @@ export function* authSaga(action) {
 			} else if (error === "enter the correct user data") {
 				yield put(stopSubmit("auth", { login: "enter correct user data", password: "enter correct user data" }));
 				yield put(loginFailedAction());
-			} else if (error === "internal db error") {
+			} else if (error === "internal server error") {
 				stopSubmit("auth", {
 					login: "network connection error, please retry",
 					user: "network connection error, please retry",
@@ -71,7 +71,7 @@ export function* loginSaga(action) {
 					})
 				);
 				yield put(loginFailedAction());
-			} else if (error === "internal db error") {
+			} else if (error === "internal server error") {
 				yield put(
 					stopSubmit("login", {
 						login: "network connection error, please retry",
@@ -121,12 +121,12 @@ export function* refreshSaga() {
 				console.log("error token not valid");
 				yield call(logoutSaga);
 				yield put(loginFailedAction());
-			} else if (error === "internal db error") {
-				console.log("error internal db error");
+			} else if (error === "internal server error") {
+				console.log("error internal server error");
 				yield call(logoutSaga);
 				yield put(loginFailedAction());
 			} else if (error === "token was used") {
-				console.log("error internal db error");
+				console.log("error internal server error");
 				yield call(logoutSaga);
 				yield put(loginFailedAction());
 			}

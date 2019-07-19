@@ -68,7 +68,7 @@ export function* fetchAddReviewSaga(action) {
 					})
 				);
 				yield put(reviewsErrorAction());
-			} else if (error === "internal db error") {
+			} else if (error === "internal server error") {
 				yield put(
 					stopSubmit("review-form", {
 						login: "network connection error, please retry",

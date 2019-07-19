@@ -21,7 +21,7 @@ module.exports.loginUserController = (req, res) => {
 				return res.status(403).send({ error: "user exists", data: {} });
 			}
 
-			return res.status(500).send({ error: "internal db error", data: {} });
+			return res.status(500).send({ error: "internal server error", data: {} });
 		}
 
 		const { access_token, refresh_token, expiresIn } = createTokenPair(login);

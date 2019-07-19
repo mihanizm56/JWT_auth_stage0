@@ -16,7 +16,7 @@ module.exports.authController = (req, res) => {
 	userCollection(login).exec((error, data) => {
 		if (error) {
 			console.log("check err", error);
-			return res.status(500).json({ error: "internal db error", data: {} });
+			return res.status(500).json({ error: "internal server error", data: {} });
 		}
 
 		if (data) {
